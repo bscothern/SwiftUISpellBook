@@ -17,6 +17,10 @@ let package = Package(
             targets: ["AllSwiftUISpellBooks"]
         ),
         .library(
+            name: "SwiftUIDebugToolsSpellBook",
+            targets: ["SwiftUIDebugToolsSpellBook"]
+        ),
+        .library(
             name: "SwiftUISpellBook",
             targets: ["SwiftUISpellBook"]
         ),
@@ -31,17 +35,18 @@ let package = Package(
         .target(
             name: "AllSwiftUISpellBooks",
             dependencies: [
+                .target(name: "SwiftUIDebugToolsSpellBook"),
                 .target(name: "SwiftUISpellBook"),
                 .target(name: "SwiftUIPopNavigationSpellBook"),
             ]
         ),
         .target(
-            name: "SwiftUISpellBook",
+            name: "SwiftUIDebugToolsSpellBook",
             dependencies: []
         ),
-        .testTarget(
-            name: "SwiftUISpellBookTests",
-            dependencies: ["SwiftUISpellBook"]
+        .target(
+            name: "SwiftUISpellBook",
+            dependencies: []
         ),
         .target(
             name: "SwiftUIPopNavigationSpellBook",

@@ -6,5 +6,6 @@
 //  Copyright © 2020 Braden Scothern. All rights reserved.
 //
 
+@_exported import SwiftUIDebugToolsSpellBook
 @_exported import SwiftUIPopNavigationSpellBook
 @_exported import SwiftUISpellBook
