@@ -10,10 +10,17 @@ import Foundation
 import SwiftUI
 
 extension View {
+    #if DEBUG
     @inlinable
     public func replaceInPreviews<ReplacementView>(shouldBeReplaced: Bool = true, with replacementView: ReplacementView) -> some View where ReplacementView: View {
         modifier(ReplaceInPreviewsModifier(shouldBeReplaced: shouldBeReplaced, with: replacementView))
     }
+    #else
+    @inlinable
+    public func replaceInPreviews<ReplacementView>(shouldBeReplaced: Bool = true, with replacementView: ReplacementView) -> some View where ReplacementView: View {
+        self
+    }
+    #endif
 }
 
 @usableFromInline
