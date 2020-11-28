@@ -9,11 +9,20 @@
 import SwiftUI
 #if canImport(UIKit)
 import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#else
+#error("Unsupported Platform")
+#endif
 
 public extension View {
     @inlinable
     func popNavigationLinkDestination() -> ModifiedContent<Self, _PopNavigationLinkDestinationModifier> {
+        #if canImport(UIKit)
         _ = UINavigationController.PopViewControllerSwizzler.performSwizzle
+        #elseif canImport(AppKit)
+        fatalError("Not yet supported on macOS")
+        #endif
         return modifier(_PopNavigationLinkDestinationModifier())
     }
 }
@@ -39,4 +48,3 @@ public struct _PopNavigationLinkDestinationModifier: ViewModifier {
             .environment(\.popNavigation, .init($popNavigation))
     }
 }
-#endif

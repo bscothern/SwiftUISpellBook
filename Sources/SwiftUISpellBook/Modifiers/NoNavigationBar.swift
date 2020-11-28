@@ -23,8 +23,12 @@ struct NoNavigationbarModifier: ViewModifier {
 
     @usableFromInline
     func body(content: Content) -> some View {
-        content
+        #if os(macOS)
+        return content
+        #else
+        return content
             .navigationBarTitle("")
             .navigationBarHidden(true)
+        #endif
     }
 }
