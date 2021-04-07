@@ -13,16 +13,24 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "AllSwiftUISpellBooks",
-            targets: ["AllSwiftUISpellBooks"]
+            name: "SwiftUISpellBook",
+            targets: ["SwiftUISpellBook"]
+        ),
+        .library(
+            name: "SwiftUIBundleFinder",
+            targets: ["SwiftUIBundleFinder"]
+        ),
+        .library(
+            name: "SwiftUICommonSpellBook",
+            targets: ["SwiftUICommonSpellBook"]
         ),
         .library(
             name: "SwiftUIDebugToolsSpellBook",
             targets: ["SwiftUIDebugToolsSpellBook"]
         ),
         .library(
-            name: "SwiftUISpellBook",
-            targets: ["SwiftUISpellBook"]
+            name: "SwiftUIMissingComponentsSpellBook",
+            targets: ["SwiftUIMissingComponentsSpellBook"]
         ),
         .library(
             name: "SwiftUIPopNavigationSpellBook",
@@ -33,24 +41,40 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "AllSwiftUISpellBooks",
+            name: "SwiftUISpellBook",
             dependencies: [
+                .target(name: "SwiftUIBundleFinder"),
+                .target(name: "SwiftUICommonSpellBook"),
                 .target(name: "SwiftUIDebugToolsSpellBook"),
-                .target(name: "SwiftUISpellBook"),
+                .target(name: "SwiftUIMissingComponentsSpellBook"),
                 .target(name: "SwiftUIPopNavigationSpellBook"),
             ]
         ),
         .target(
-            name: "SwiftUIDebugToolsSpellBook",
-            dependencies: []
+            name: "SwiftUIBundleFinder"
         ),
         .target(
-            name: "SwiftUISpellBook",
+            name: "SwiftUICommonSpellBook",
+            dependencies: [
+                .target(name: "SwiftUIMissingComponentsSpellBook"),
+            ]
+        ),
+        .target(
+            name: "SwiftUIDebugToolsSpellBook",
+            dependencies: [
+                .target(name: "SwiftUICommonSpellBook"),
+                .target(name: "SwiftUIMissingComponentsSpellBook"),
+            ]
+        ),
+        .target(
+            name: "SwiftUIMissingComponentsSpellBook",
             dependencies: []
         ),
         .target(
             name: "SwiftUIPopNavigationSpellBook",
-            dependencies: []
+            dependencies: [
+                .target(name: "SwiftUIMissingComponentsSpellBook"),
+            ]
         ),
     ]
 )

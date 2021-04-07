@@ -3,7 +3,7 @@
 //  SwiftUISpellBook
 //
 //  Created by Braden Scothern on 11/23/20.
-//  Copyright © 2020 Braden Scothern. All rights reserved.
+//  Copyright © 2020-2021 Braden Scothern. All rights reserved.
 //
 
 import SwiftUI
@@ -34,8 +34,7 @@ struct NavigationToModifier<Destination>: ViewModifier where Destination: View {
         content.overlay {
             NavigationLink(
                 destination: destination,
-                isActive: isActive,
-                label: { EmptyView() }
+                isActive: isActive
             )
         }
     }
