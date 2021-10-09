@@ -1,8 +1,9 @@
 //
-//  File.swift
-//  
+//  BundleFinder.Value.swift
+//  SwiftUISpellBook
 //
 //  Created by Braden Scothern on 4/6/21.
+//  Copyright © 2020-2021 Braden Scothern. All rights reserved.
 //
 
 import Foundation
