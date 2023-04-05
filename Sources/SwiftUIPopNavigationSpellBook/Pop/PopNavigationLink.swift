@@ -39,17 +39,17 @@ public struct PopNavigationLink<Label, Destination>: View where Label: View, Des
 // MARK: Init
 public extension PopNavigationLink {
     @inlinable
-    init(destination: Destination, isActive: Binding<Bool>, @ViewBuilder label: () -> Label) { //swiftlint:disable:this attributes
+    init(destination: Destination, isActive: Binding<Bool>, @ViewBuilder label: () -> Label) { // swiftlint:disable:this attributes
         self.init(.init(destination: destination.popNavigationLinkDestination(), isActive: isActive, label: label))
     }
 
     @inlinable
-    init(destination: Destination, @ViewBuilder label: () -> Label) { //swiftlint:disable:this attributes
+    init(destination: Destination, @ViewBuilder label: () -> Label) { // swiftlint:disable:this attributes
         self.init(.init(destination: destination.popNavigationLinkDestination(), label: label))
     }
 
     @inlinable
-    init<V>(destination: Destination, tag: V, selection: Binding<V?>, @ViewBuilder label: () -> Label) where V: Hashable { //swiftlint:disable:this attributes
+    init<V>(destination: Destination, tag: V, selection: Binding<V?>, @ViewBuilder label: () -> Label) where V: Hashable { // swiftlint:disable:this attributes
         self.init(.init(destination: destination.popNavigationLinkDestination(), tag: tag, selection: selection, label: label))
     }
 }

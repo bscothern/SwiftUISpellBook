@@ -31,16 +31,16 @@ extension Bundle {
         let candidates = [
             // Main app bundle
             Bundle.main.resourceURL,
-            
+
             // Framework bundle location
             Bundle(for: finder.self).resourceURL,
-            
+
             // CLI
             Bundle.main.bundleURL,
-            
+
             // iOS Previews
             Bundle(for: finder.self).resourceURL?.deletingLastPathComponent().deletingLastPathComponent(),
-            
+
             // macOS Previews
             Bundle(for: finder.self).resourceURL?.deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent(),
         ]

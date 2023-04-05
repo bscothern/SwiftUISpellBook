@@ -18,7 +18,7 @@ extension NavigationLink {
     public init(destination: Destination, isActive: Binding<Bool>) where Label == EmptyView {
         self.init(destination: destination, isActive: isActive, label: EmptyView.init)
     }
-    
+
     /// Creates an instance that presents the destination when active with no label.
     ///
     /// - Parameters:

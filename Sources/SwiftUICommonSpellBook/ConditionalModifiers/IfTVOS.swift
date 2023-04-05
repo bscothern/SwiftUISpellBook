@@ -17,8 +17,7 @@ extension View {
         self
         #endif
     }
-    
-    
+
     @ViewBuilder
     public func ifTVOS<ThenView, ElseView>(@ViewBuilder _ thenView: (_ view: Self) -> ThenView, @ViewBuilder else elseView: (_ view: Self) -> ElseView) -> some View where ThenView: View, ElseView: View {
         #if os(tvOS)

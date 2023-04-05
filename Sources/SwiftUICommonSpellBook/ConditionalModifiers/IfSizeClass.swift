@@ -32,8 +32,7 @@ extension View {
     ) -> ModifiedContent<Self, IfSizeClass<ThenView, ElseView>>
     where
         ThenView: View,
-        ElseView: View
-    {
+        ElseView: View {
         modifier(IfSizeClass(horizontalSizeClass: horizontalSizeClass, then: thenView, else: elseView))
     }
 
@@ -59,8 +58,7 @@ extension View {
     ) -> ModifiedContent<Self, IfSizeClass<ThenView, ElseView>>
     where
         ThenView: View,
-        ElseView: View
-    {
+        ElseView: View {
         modifier(IfSizeClass(verticalSizeClass: verticalSizeClass, then: thenView, else: elseView))
     }
 }
@@ -70,21 +68,21 @@ public struct IfSizeClass<ThenView, ElseView>: ViewModifier where ThenView: View
     @usableFromInline
     @Environment(\.horizontalSizeClass)
     var currentHorizontalSizeClass: UserInterfaceSizeClass?
-    
+
     @usableFromInline
     @Environment(\.verticalSizeClass)
     var currentVerticalSizeClass: UserInterfaceSizeClass?
-    
+
     @usableFromInline
     let horizontalSizeClass: UserInterfaceSizeClass?
-    
+
     @usableFromInline
     let verticalSizeClass: UserInterfaceSizeClass?
     #endif
 
     @usableFromInline
     let thenView: (Content) -> ThenView
-    
+
     @usableFromInline
     let elseView: (Content) -> ElseView
 
@@ -97,7 +95,7 @@ public struct IfSizeClass<ThenView, ElseView>: ViewModifier where ThenView: View
         self.thenView = thenView
         self.elseView = elseView
     }
-    
+
     @usableFromInline
     init(verticalSizeClass: UserInterfaceSizeClass, then thenView: @escaping (Content) -> ThenView, else elseView: @escaping (Content) -> ElseView) {
         #if os(iOS)
