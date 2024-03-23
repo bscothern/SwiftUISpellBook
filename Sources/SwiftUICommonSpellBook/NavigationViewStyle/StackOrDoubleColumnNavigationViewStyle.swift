@@ -3,7 +3,7 @@
 //  SwiftUISpellBook
 //
 //  Created by Braden Scothern on 10/4/20.
-//  Copyright © 2020-2021 Braden Scothern. All rights reserved.
+//  Copyright © 2020-2024 Braden Scothern. All rights reserved.
 //
 
 import SwiftUI
@@ -29,9 +29,10 @@ struct StackOrDoubleColumnNavigationViewStyleViewMoifier: ViewModifier {
     @Environment(\.horizontalSizeClass)
     var horizontalSizeClass: UserInterfaceSizeClass?
     #endif
-
+    
     @usableFromInline
     init() {}
+    
 
     @usableFromInline
     @ViewBuilder

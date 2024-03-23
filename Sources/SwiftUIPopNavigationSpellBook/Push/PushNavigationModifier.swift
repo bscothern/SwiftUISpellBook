@@ -3,7 +3,7 @@
 //  SwiftUISpellBook
 //
 //  Created by Braden Scothern on 10/9/20.
-//  Copyright © 2020-2021 Braden Scothern. All rights reserved.
+//  Copyright © 2020-2024 Braden Scothern. All rights reserved.
 //
 
 import SwiftUI

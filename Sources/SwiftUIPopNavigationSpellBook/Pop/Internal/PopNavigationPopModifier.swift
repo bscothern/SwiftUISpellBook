@@ -3,7 +3,7 @@
 //  SwiftUISpellBook
 //
 //  Created by Braden Scothern on 1/3/20.
-//  Copyright © 2019-2021 Braden Scothern. All rights reserved.
+//  Copyright © 2020-2024 Braden Scothern. All rights reserved.
 //
 
 import SwiftUI
@@ -19,11 +19,6 @@ extension View {
 struct PopNavigationPopModifier: ViewModifier {
     @usableFromInline
     let count: Int
-
-    @usableFromInline
-    init(count: Int) {
-        self.count = count
-    }
 
     @usableFromInline
     func body(content: Content) -> some View {

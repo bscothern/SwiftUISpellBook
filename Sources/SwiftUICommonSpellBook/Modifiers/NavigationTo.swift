@@ -3,7 +3,7 @@
 //  SwiftUISpellBook
 //
 //  Created by Braden Scothern on 11/23/20.
-//  Copyright © 2020-2021 Braden Scothern. All rights reserved.
+//  Copyright © 2020-2024 Braden Scothern. All rights reserved.
 //
 
 import SwiftUI
@@ -22,13 +22,13 @@ struct NavigationToModifier<Destination>: ViewModifier where Destination: View {
 
     @usableFromInline
     let isActive: Binding<Bool>
-
+    
     @usableFromInline
     init(destination: Destination, isActive: Binding<Bool>) {
         self.destination = destination
         self.isActive = isActive
     }
-
+    
     @usableFromInline
     func body(content: Content) -> some View {
         content.overlay {

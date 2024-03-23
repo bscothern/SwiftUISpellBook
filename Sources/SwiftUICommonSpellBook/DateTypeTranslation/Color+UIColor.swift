@@ -3,12 +3,23 @@
 //  SwiftUISpellBook
 //
 //  Created by Braden Scothern on 10/4/20.
-//  Copyright © 2020-2021 Braden Scothern. All rights reserved.
+//  Copyright © 2020-2024 Braden Scothern. All rights reserved.
 //
 
-#if canImport(UIKit)
 import SwiftUI
+#if canImport(UIKit)
 import UIKit
+extension Color {
+    private typealias UIColorType = UIColor
+}
+
+#elseif canImport(AppKit)
+import AppKit
+extension Color {
+    private typealias UIColorType = NSColor
+}
+
+#endif
 
 @available(iOS 14.0, *)
 @available(macCatalyst 14.0, *)
@@ -17,7 +28,7 @@ import UIKit
 @available(tvOS 14.0, *)
 extension Color {
     func rgbaColorSpaceComponents() -> (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) {
-        let uiColor = UIColor(self)
+        let uiColor = UIColorType(self)
         var red: CGFloat = 0
         var green: CGFloat = 0
         var blue: CGFloat = 0
@@ -27,7 +38,7 @@ extension Color {
     }
 
     func hsbColorSpaceComponents() -> (hue: CGFloat, saturation: CGFloat, brightness: CGFloat, alpha: CGFloat) {
-        let uiColor = UIColor(self)
+        let uiColor = UIColorType(self)
         var hue: CGFloat = 0
         var saturation: CGFloat = 0
         var brightness: CGFloat = 0
@@ -36,5 +47,3 @@ extension Color {
         return (hue, saturation, brightness, alpha)
     }
 }
-
-#endif

@@ -3,12 +3,13 @@
 //  SwiftUISpellBook
 //
 //  Created by Braden Scothern on 1/30/21.
-//  Copyright © 2020-2021 Braden Scothern. All rights reserved.
+//  Copyright © 2020-2024 Braden Scothern. All rights reserved.
 //
 
 import SwiftUI
 import SwiftUIMissingComponentsSpellBook
 
+#if !os(macOS)
 extension View {
     @inlinable
     public func ifHorizontalSizeClass<
@@ -134,3 +135,4 @@ public struct IfSizeClass<ThenView, ElseView>: ViewModifier where ThenView: View
         #endif
     }
 }
+#endif

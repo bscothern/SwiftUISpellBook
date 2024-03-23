@@ -3,7 +3,7 @@
 //  SwiftUISpellBook
 //
 //  Created by Braden Scothern on 10/4/20.
-//  Copyright © 2020-2021 Braden Scothern. All rights reserved.
+//  Copyright © 2020-2024 Braden Scothern. All rights reserved.
 //
 
 import SwiftUI
@@ -22,11 +22,12 @@ extension View {
 struct GradientMaskModifier: ViewModifier {
     @usableFromInline
     let linearGradient: LinearGradient
-
+    
     @usableFromInline
     init(linearGradient: LinearGradient) {
         self.linearGradient = linearGradient
     }
+    
 
     @usableFromInline
     func body(content: Content) -> some View {

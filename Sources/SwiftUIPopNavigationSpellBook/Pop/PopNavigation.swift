@@ -3,7 +3,7 @@
 //  SwiftUISpellBook
 //
 //  Created by Braden Scothern on 1/3/20.
-//  Copyright © 2019-2021 Braden Scothern. All rights reserved.
+//  Copyright © 2020-2024 Braden Scothern. All rights reserved.
 //
 
 import SwiftUI
@@ -35,9 +35,6 @@ struct _PopNavigation {
     var value: Int = 0 {
         didSet { PopNavigationState.shared.popCount = value }
     }
-
-    @usableFromInline
-    init() {}
 
     @usableFromInline
     mutating func pop(count: Int) {
