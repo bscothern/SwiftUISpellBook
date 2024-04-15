@@ -31,6 +31,9 @@ struct StackOrDoubleColumnNavigationViewStyleViewMoifier: ViewModifier {
     #endif
 
     @usableFromInline
+    init() {}
+
+    @usableFromInline
     @ViewBuilder
     func body(content: Content) -> some View {
         #if !os(macOS)

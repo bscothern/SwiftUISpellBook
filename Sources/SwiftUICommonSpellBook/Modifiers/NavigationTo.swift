@@ -24,6 +24,12 @@ struct NavigationToModifier<Destination>: ViewModifier where Destination: View {
     let isActive: Binding<Bool>
 
     @usableFromInline
+    init(destination: Destination, isActive: Binding<Bool>) {
+        self.destination = destination
+        self.isActive = isActive
+    }
+
+    @usableFromInline
     func body(content: Content) -> some View {
         content.overlay {
             NavigationLink(

@@ -19,6 +19,9 @@ extension View {
 @usableFromInline
 struct FillSpaceModifier: ViewModifier {
     @usableFromInline
+    init() {}
+
+    @usableFromInline
     func body(content: Content) -> some View {
         content
             .edgesIgnoringSafeArea(.all)

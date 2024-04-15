@@ -18,6 +18,9 @@ extension View {
 @usableFromInline
 struct Centered: ViewModifier {
     @usableFromInline
+    init() {}
+
+    @usableFromInline
     func body(content: Content) -> some View {
         content
             .centeredVertically()

@@ -19,6 +19,9 @@ extension View {
 @usableFromInline
 struct NoNavigationbarModifier: ViewModifier {
     @usableFromInline
+    init() {}
+
+    @usableFromInline
     func body(content: Content) -> some View {
         #if os(macOS)
         return content

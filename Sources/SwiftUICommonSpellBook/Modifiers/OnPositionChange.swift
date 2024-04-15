@@ -189,13 +189,6 @@ struct OnGlobalPositionChangeAlertModifier<IDType>: ViewModifier {
                             key: ViewPositionChangedPreferenceKey<IDType>.self,
                             value: .init(value: value, id: id)
                         )
-                        .overlay {
-                            {
-                                let globalCoordinates = geometry.frame(in: GlobalCoordinateSpace())
-                                let local = geometry.frame(in: .local)
-                                return EmptyView()
-                            }()
-                        }
                 }
             }
             .onPreferenceChange(ViewPositionChangedPreferenceKey<IDType>.self) { value in

@@ -24,6 +24,11 @@ struct GradientMaskModifier: ViewModifier {
     let linearGradient: LinearGradient
 
     @usableFromInline
+    init(linearGradient: LinearGradient) {
+        self.linearGradient = linearGradient
+    }
+
+    @usableFromInline
     func body(content: Content) -> some View {
         content
             .overlay(linearGradient)

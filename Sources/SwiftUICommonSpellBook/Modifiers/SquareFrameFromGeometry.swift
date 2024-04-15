@@ -24,6 +24,12 @@ struct SquareFrameFromGeometryModifier: ViewModifier {
     let alignment: Alignment
 
     @usableFromInline
+    init(max: CGFloat, alignment: Alignment) {
+        self.max = max
+        self.alignment = alignment
+    }
+
+    @usableFromInline
     func body(content: Content) -> some View {
         GeometryReader { geometry in
             ZStack {
