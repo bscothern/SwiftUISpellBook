@@ -18,9 +18,6 @@ extension View {
 @usableFromInline
 struct CenteredVertically: ViewModifier {
     @usableFromInline
-    init() {}
-    
-    @usableFromInline
     func body(content: Content) -> some View {
         VStack {
             Spacer()

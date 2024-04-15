@@ -19,6 +19,7 @@ extension View {
         @ViewBuilder then thenView: @escaping (IfSizeClass<ThenView, _PassThroughView>.Content) -> ThenView
     ) -> ModifiedContent<Self, IfSizeClass<ThenView, _PassThroughView>>
     where ThenView: View {
+        // swiftlint:disable:next trailing_closure
         modifier(IfSizeClass(horizontalSizeClass: horizontalSizeClass, then: thenView, else: { _ in fatalViewError("Unreachable") }))
     }
 
@@ -45,6 +46,7 @@ extension View {
         @ViewBuilder then thenView: @escaping (IfSizeClass<ThenView, _PassThroughView>.Content) -> ThenView
     ) -> ModifiedContent<Self, IfSizeClass<ThenView, _PassThroughView>>
     where ThenView: View {
+        // swiftlint:disable:next trailing_closure
         modifier(IfSizeClass(verticalSizeClass: verticalSizeClass, then: thenView, else: { _ in fatalViewError("Unreachable")}))
     }
 

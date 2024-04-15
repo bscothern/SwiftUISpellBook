@@ -29,10 +29,6 @@ struct StackOrDoubleColumnNavigationViewStyleViewMoifier: ViewModifier {
     @Environment(\.horizontalSizeClass)
     var horizontalSizeClass: UserInterfaceSizeClass?
     #endif
-    
-    @usableFromInline
-    init() {}
-    
 
     @usableFromInline
     @ViewBuilder

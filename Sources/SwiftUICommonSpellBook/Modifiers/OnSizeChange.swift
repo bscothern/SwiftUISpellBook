@@ -34,7 +34,7 @@ extension View {
             )
         )
     }
-    
+
     /// Triggers an action when the height or width of a view changes sizes.
     ///
     /// - Note: This is always fired at least once when the view is first created and appears.
@@ -84,19 +84,19 @@ public enum OnSizeChangeType {
 struct SizeChangeAlertModifier<IDType>: ViewModifier {
     @usableFromInline
     let type: OnSizeChangeType
-    
+
     @usableFromInline
     let id: Int
-    
+
     @usableFromInline
     let action: (_ newSize: SizeChangeValue) -> Void
-    
+
     @State
     var lastWidth: Double?
-    
+
     @State
     var lastHeight: Double?
-    
+
     @usableFromInline
     init(
         type: OnSizeChangeType,
@@ -129,7 +129,7 @@ struct SizeChangeAlertModifier<IDType>: ViewModifier {
                       case let .both(width, height) = value.value else {
                     return
                 }
-                
+
                 switch (type, width != lastWidth, height != lastHeight) {
                 case (.either, true, true):
                     action(.both(width: width, height: height))
@@ -137,7 +137,7 @@ struct SizeChangeAlertModifier<IDType>: ViewModifier {
                     (.width, true, _):
                     action(.width(width))
                 case (.either, false, true),
-                    (.height, _ ,true):
+                    (.height, _, true):
                     action(.height(height))
                 default:
                     break
@@ -151,15 +151,9 @@ struct ViewSizeChangedPreferenceKey<IDType>: PreferenceKey {
     struct Value: Hashable {
         @usableFromInline
         var value: SizeChangeValue
-        
+
         @usableFromInline
         var id: Int
-        
-        @usableFromInline
-        init(value: SizeChangeValue, id: Int) {
-            self.value = value
-            self.id = id
-        }
     }
 
     static var defaultValue: Value {

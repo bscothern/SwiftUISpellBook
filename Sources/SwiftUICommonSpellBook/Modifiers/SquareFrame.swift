@@ -27,12 +27,6 @@ struct SquareFrameModifier: ViewModifier {
 
     @usableFromInline
     let alignment: Alignment
-    
-    @usableFromInline
-    init(size: CGFloat, alignment: Alignment) {
-        self.size = size
-        self.alignment = alignment
-    }
 
     @usableFromInline
     func body(content: Content) -> some View {

@@ -3,7 +3,6 @@ included:
     - ./Tests
 
 opt_in_rules:
-    - anyobject_protocol
     - array_init
     - contains_over_first_not_nil
     - convenience_type

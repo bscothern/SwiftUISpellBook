@@ -20,13 +20,13 @@ extension View {
     ///   - action: The action to perform when the view changes.
     /// - Returns: A view that will trigger `action` at the appropriate size changes of the view this is applied too.
     @inlinable
-    public func onPositionChange(
-        of type: OnPositionChangeType,
+    public func onGlobalPositionChange(
+        of type: OnGlobalPositionChangeType,
         uuid: UUID,
         perform action: @escaping (_ newPosition: OnPositionChangeValue) -> Void
     ) -> some View {
         return modifier(
-            PositionChangeAlertModifier<Self>(
+            OnGlobalPositionChangeAlertModifier<Self>(
                 type: type,
                 id: uuid.hashValue,
                 action: action,
@@ -34,7 +34,7 @@ extension View {
             )
         )
     }
-    
+
     /// Triggers an action when the height or width of a view changes sizes.
     ///
     /// - Note: This is always fired at least once when the view is first created and appears.
@@ -51,15 +51,15 @@ extension View {
     ///   - action: The action to perform when the view changes.
     /// - Returns: A view that will trigger `action` at the appropriate size changes of the view this is applied too.
     @inlinable
-    public func onPositionChange(
-        of type: OnPositionChangeType,
+    public func onGlobalPositionChange(
+        of type: OnGlobalPositionChangeType,
         fileID: String = #fileID,
         function: String = #function,
         line: Int = #line,
         perform action: @escaping (_ newPosition: OnPositionChangeValue) -> Void
     ) -> some View {
         return modifier(
-            PositionChangeAlertModifier<Self>(
+            OnGlobalPositionChangeAlertModifier<Self>(
                 type: type,
                 id: "\(fileID)\(function)\(line)".hashValue,
                 action: action,
@@ -73,7 +73,7 @@ extension View {
 public enum OnPositionChangeValue: Hashable {
     case float(CGFloat)
     case point(CGPoint)
-    
+
     public static func == (lhs: Self, rhs: Self) -> Bool {
         switch (lhs, rhs) {
         case let (.float(lhs), .float(rhs)):
@@ -84,7 +84,7 @@ public enum OnPositionChangeValue: Hashable {
             return false
         }
     }
-    
+
     public func hash(into hasher: inout Hasher) {
         switch self {
         case let .float(value):
@@ -96,9 +96,9 @@ public enum OnPositionChangeValue: Hashable {
             hasher.combine(value.y)
         }
     }
-    
+
     @usableFromInline
-    static func value(in geometry: GeometryProxy, type: OnPositionChangeType) -> Self {
+    static func value(in geometry: GeometryProxy, type: OnGlobalPositionChangeType) -> Self {
         let frame: CGRect = geometry.frame(in: GlobalCoordinateSpace())
         var isRightToLeft: Bool {
             guard let language = Locale.current.languageCode else {
@@ -137,7 +137,7 @@ public enum OnPositionChangeValue: Hashable {
 
 /// Type of change to watch in ``View.onPositionChange()``/
 @available(iOS 17, macOS 14, *)
-public enum OnPositionChangeType {
+public enum OnGlobalPositionChangeType {
     case center
     case top
     case bottom
@@ -149,22 +149,22 @@ public enum OnPositionChangeType {
 
 @available(iOS 17, macOS 14, *)
 @usableFromInline
-struct PositionChangeAlertModifier<IDType>: ViewModifier {
+struct OnGlobalPositionChangeAlertModifier<IDType>: ViewModifier {
     @usableFromInline
-    let type: OnPositionChangeType
-    
+    let type: OnGlobalPositionChangeType
+
     @usableFromInline
     let id: Int
-    
+
     @usableFromInline
     let action: (_ newSize: OnPositionChangeValue) -> Void
-    
+
     @State
     var lastValue: OnPositionChangeValue?
-    
+
     @usableFromInline
     init(
-        type: OnPositionChangeType,
+        type: OnGlobalPositionChangeType,
         id: Int,
         action: @escaping (_ newPosition: OnPositionChangeValue) -> Void,
         lastValue: OnPositionChangeValue?
@@ -215,16 +215,10 @@ struct ViewPositionChangedPreferenceKey<IDType>: PreferenceKey {
     struct Value: Hashable {
         @usableFromInline
         var value: OnPositionChangeValue
-        
+
         @usableFromInline
         var id: Int
-        
-        @usableFromInline
-        init(value: OnPositionChangeValue, id: Int) {
-            self.value = value
-            self.id = id
-        }
-        
+
         static func == (lhs: Self, rhs: Self) -> Bool {
             false
         }
