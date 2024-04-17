@@ -9,5 +9,6 @@
 @_exported import SwiftUIBundleFinder
 @_exported import SwiftUICommonSpellBook
 @_exported import SwiftUIDebugToolsSpellBook
+@_exported import SwiftUILocalizationSpellBook
 @_exported import SwiftUIMissingComponentsSpellBook
 @_exported import SwiftUIPopNavigationSpellBook
