@@ -12,12 +12,19 @@ import SwiftUI
 extension View {
     #if DEBUG
     @inlinable
-    public func replaceInPreviews<ReplacementView>(shouldBeReplaced: Bool = true, with replacementView: ReplacementView) -> some View where ReplacementView: View {
+    public func replaceInPreviews<ReplacementView>(
+        shouldBeReplaced: Bool = true,
+        @ViewBuilder with replacementView: @escaping () -> ReplacementView
+    ) -> some View where ReplacementView: View {
         modifier(ReplaceInPreviewsModifier(shouldBeReplaced: shouldBeReplaced, with: replacementView))
     }
     #else
     @inlinable
-    public func replaceInPreviews<ReplacementView>(shouldBeReplaced: Bool = true, with replacementView: ReplacementView) -> some View where ReplacementView: View {
+    @inline(__always)
+    public func replaceInPreviews<ReplacementView>(
+        shouldBeReplaced: Bool = true,
+        @ViewBuilder with replacementView: () -> ReplacementView
+    ) -> some View where ReplacementView: View {
         self
     }
     #endif
@@ -32,13 +39,13 @@ struct ReplaceInPreviewsModifier<ReplacementView: View>: ViewModifier {
     var shouldBeReplaced: Bool { _shouldBeReplaced && isPreviewMode }
 
     @usableFromInline
-    let replacementView: ReplacementView
+    let replacementView: () -> ReplacementView
 
     @usableFromInline
     var isPreviewMode: Bool { ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" }
 
     @usableFromInline
-    init(shouldBeReplaced: Bool, with replacementView: ReplacementView) {
+    init(shouldBeReplaced: Bool, with replacementView: @escaping () -> ReplacementView) {
         self._shouldBeReplaced = shouldBeReplaced
         self.replacementView = replacementView
     }
@@ -47,7 +54,7 @@ struct ReplaceInPreviewsModifier<ReplacementView: View>: ViewModifier {
     func body(content: Content) -> some View {
         Group {
             if self.shouldBeReplaced {
-                self.replacementView
+                self.replacementView()
             } else {
                 content
             }

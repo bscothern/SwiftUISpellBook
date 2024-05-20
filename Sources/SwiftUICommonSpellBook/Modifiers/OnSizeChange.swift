@@ -27,7 +27,7 @@ extension View {
         return modifier(
             SizeChangeAlertModifier<Self>(
                 type: type,
-                id: uuid.hashValue,
+                id: AnyHashable(uuid),
                 action: action,
                 lastWidth: nil,
                 lastHeight: nil
@@ -61,7 +61,7 @@ extension View {
         return modifier(
             SizeChangeAlertModifier<Self>(
                 type: type,
-                id: "\(fileID)\(function)\(line)".hashValue,
+                id: AnyHashable("\(fileID)\(function)\(line)"),
                 action: action,
                 lastWidth: nil,
                 lastHeight: nil
@@ -86,7 +86,7 @@ struct SizeChangeAlertModifier<IDType>: ViewModifier {
     let type: OnSizeChangeType
 
     @usableFromInline
-    let id: Int
+    let id: AnyHashable
 
     @usableFromInline
     let action: (_ newSize: SizeChangeValue) -> Void
@@ -97,14 +97,18 @@ struct SizeChangeAlertModifier<IDType>: ViewModifier {
     @State
     var lastHeight: Double?
 
+    @State
+    var hasAppeared = false
+
     @usableFromInline
     init(
         type: OnSizeChangeType,
-        id: Int,
+        id: AnyHashable,
         action: @escaping (_ newSize: SizeChangeValue) -> Void,
         lastWidth: Double?,
         lastHeight: Double?
     ) {
+//        print("Size Change id: \(id.hashValue)")
         self.type = type
         self.id = id
         self.action = action
@@ -125,7 +129,9 @@ struct SizeChangeAlertModifier<IDType>: ViewModifier {
                 }
             }
             .onPreferenceChange(ViewSizeChangedPreferenceKey<IDType>.self) { value in
+                let anyHashableValue = AnyHashable(value)
                 guard id == value.id,
+                      viewSizeChangeLastValue.updateValue(anyHashableValue, forKey: id) != anyHashableValue,
                       case let .both(width, height) = value.value else {
                     return
                 }
@@ -143,8 +149,14 @@ struct SizeChangeAlertModifier<IDType>: ViewModifier {
                     break
                 }
             }
+            .onDisappear {
+                viewSizeChangeLastValue.removeValue(forKey: id)
+            }
     }
 }
+
+@MainActor
+private var viewSizeChangeLastValue: [AnyHashable: AnyHashable] = [:]
 
 struct ViewSizeChangedPreferenceKey<IDType>: PreferenceKey {
     @usableFromInline
@@ -153,7 +165,7 @@ struct ViewSizeChangedPreferenceKey<IDType>: PreferenceKey {
         var value: SizeChangeValue
 
         @usableFromInline
-        var id: Int
+        var id: AnyHashable
     }
 
     static var defaultValue: Value {
@@ -162,7 +174,7 @@ struct ViewSizeChangedPreferenceKey<IDType>: PreferenceKey {
                 width: 0,
                 height: 0
             ),
-            id: 0
+            id: AnyHashable(0)
         )
     }
 
@@ -171,7 +183,7 @@ struct ViewSizeChangedPreferenceKey<IDType>: PreferenceKey {
     }
 }
 
-public enum SizeChangeValue: Hashable {
+public enum SizeChangeValue: Hashable, Sendable {
     case width(Double)
     case height(Double)
     case both(width: Double, height: Double)

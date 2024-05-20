@@ -28,7 +28,7 @@ extension View {
         return modifier(
             OnGlobalPositionChangeAlertModifier<Self>(
                 type: type,
-                id: uuid.hashValue,
+                id: AnyHashable(uuid),
                 action: action,
                 lastValue: nil
             )
@@ -61,7 +61,7 @@ extension View {
         return modifier(
             OnGlobalPositionChangeAlertModifier<Self>(
                 type: type,
-                id: "\(fileID)\(function)\(line)".hashValue,
+                id: AnyHashable("\(fileID)\(function)\(line)"),
                 action: action,
                 lastValue: nil
             )
@@ -154,7 +154,7 @@ struct OnGlobalPositionChangeAlertModifier<IDType>: ViewModifier {
     let type: OnGlobalPositionChangeType
 
     @usableFromInline
-    let id: Int
+    let id: AnyHashable
 
     @usableFromInline
     let action: (_ newSize: OnPositionChangeValue) -> Void
@@ -165,7 +165,7 @@ struct OnGlobalPositionChangeAlertModifier<IDType>: ViewModifier {
     @usableFromInline
     init(
         type: OnGlobalPositionChangeType,
-        id: Int,
+        id: AnyHashable,
         action: @escaping (_ newPosition: OnPositionChangeValue) -> Void,
         lastValue: OnPositionChangeValue?
     ) {
@@ -192,15 +192,23 @@ struct OnGlobalPositionChangeAlertModifier<IDType>: ViewModifier {
                 }
             }
             .onPreferenceChange(ViewPositionChangedPreferenceKey<IDType>.self) { value in
+                let anyHashableValue = AnyHashable(value)
                 guard id == value.id,
+                      viewPositionChangeLastValue.updateValue(anyHashableValue, forKey: id) != anyHashableValue,
                       lastValue != value.value else {
                     return
                 }
                 lastValue = value.value
                 action(value.value)
             }
+            .onDisappear {
+                viewPositionChangeLastValue.removeValue(forKey: id)
+            }
     }
 }
+
+@MainActor
+private var viewPositionChangeLastValue: [AnyHashable: AnyHashable] = [:]
 
 @available(iOS 17, macOS 14, *)
 struct ViewPositionChangedPreferenceKey<IDType>: PreferenceKey {
@@ -210,7 +218,7 @@ struct ViewPositionChangedPreferenceKey<IDType>: PreferenceKey {
         var value: OnPositionChangeValue
 
         @usableFromInline
-        var id: Int
+        var id: AnyHashable
 
         static func == (lhs: Self, rhs: Self) -> Bool {
             false
