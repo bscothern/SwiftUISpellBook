@@ -28,7 +28,7 @@ extension View {
         return modifier(
             OnGlobalPositionChangeAlertModifier<Self>(
                 type: type,
-                id: AnyHashable(uuid),
+                uuid: uuid,
                 action: action,
                 lastValue: nil
             )
@@ -50,23 +50,23 @@ extension View {
     ///   - line: The `#line` of the function call, used for hashing.
     ///   - action: The action to perform when the view changes.
     /// - Returns: A view that will trigger `action` at the appropriate size changes of the view this is applied too.
-    @inlinable
-    public func onGlobalPositionChange(
-        of type: OnGlobalPositionChangeType,
-        fileID: String = #fileID,
-        function: String = #function,
-        line: Int = #line,
-        perform action: @escaping (_ newPosition: OnPositionChangeValue) -> Void
-    ) -> some View {
-        return modifier(
-            OnGlobalPositionChangeAlertModifier<Self>(
-                type: type,
-                id: AnyHashable("\(fileID)\(function)\(line)"),
-                action: action,
-                lastValue: nil
-            )
-        )
-    }
+//    @inlinable
+//    public func onGlobalPositionChange(
+//        of type: OnGlobalPositionChangeType,
+//        fileID: String = #fileID,
+//        function: String = #function,
+//        line: Int = #line,
+//        perform action: @escaping (_ newPosition: OnPositionChangeValue) -> Void
+//    ) -> some View {
+//        return modifier(
+//            OnGlobalPositionChangeAlertModifier<Self>(
+//                type: type,
+//                id: AnyHashable("\(fileID)\(function)\(line)"),
+//                action: action,
+//                lastValue: nil
+//            )
+//        )
+//    }
 }
 
 @available(iOS 17, macOS 14, *)
@@ -154,7 +154,7 @@ struct OnGlobalPositionChangeAlertModifier<IDType>: ViewModifier {
     let type: OnGlobalPositionChangeType
 
     @usableFromInline
-    let id: AnyHashable
+    let uuid: UUID
 
     @usableFromInline
     let action: (_ newSize: OnPositionChangeValue) -> Void
@@ -165,12 +165,12 @@ struct OnGlobalPositionChangeAlertModifier<IDType>: ViewModifier {
     @usableFromInline
     init(
         type: OnGlobalPositionChangeType,
-        id: AnyHashable,
+        uuid: UUID,
         action: @escaping (_ newPosition: OnPositionChangeValue) -> Void,
         lastValue: OnPositionChangeValue?
     ) {
         self.type = type
-        self.id = id
+        self.uuid = uuid
         self.action = action
         self.lastValue = lastValue
     }
@@ -187,14 +187,14 @@ struct OnGlobalPositionChangeAlertModifier<IDType>: ViewModifier {
                     VoidView()
                         .preference(
                             key: ViewPositionChangedPreferenceKey<IDType>.self,
-                            value: .init(value: value, id: id)
+                            value: .init(value: value, uuid: uuid)
                         )
                 }
             }
             .onPreferenceChange(ViewPositionChangedPreferenceKey<IDType>.self) { value in
                 let anyHashableValue = AnyHashable(value)
-                guard id == value.id,
-                      viewPositionChangeLastValue.updateValue(anyHashableValue, forKey: id) != anyHashableValue,
+                guard uuid == value.uuid,
+                      viewPositionChangeLastValue.updateValue(anyHashableValue, forKey: uuid) != anyHashableValue,
                       lastValue != value.value else {
                     return
                 }
@@ -202,7 +202,7 @@ struct OnGlobalPositionChangeAlertModifier<IDType>: ViewModifier {
                 action(value.value)
             }
             .onDisappear {
-                viewPositionChangeLastValue.removeValue(forKey: id)
+                viewPositionChangeLastValue.removeValue(forKey: uuid)
             }
     }
 }
@@ -218,14 +218,14 @@ struct ViewPositionChangedPreferenceKey<IDType>: PreferenceKey {
         var value: OnPositionChangeValue
 
         @usableFromInline
-        var id: AnyHashable
+        var uuid: UUID
 
-        static func == (lhs: Self, rhs: Self) -> Bool {
-            false
-        }
+//        static func == (lhs: Self, rhs: Self) -> Bool {
+//            false
+//        }
     }
 
-    static var defaultValue: Value { Value(value: .float(0), id: 0) }
+    static var defaultValue: Value { Value(value: .float(0), uuid: .init()) }
 
     static func reduce(value: inout Value, nextValue: () -> Value) {
         value = nextValue()
