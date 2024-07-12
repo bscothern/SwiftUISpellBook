@@ -42,6 +42,9 @@ struct OnSizeChangeAlertModifier: ViewModifier {
     let type: OnSizeChangeType
     let action: (SizeChangeValue) -> Void
 
+    @State
+    var firedInitial = false
+
     init(type: OnSizeChangeType, action: @escaping (SizeChangeValue) -> Void) {
         self.type = type
         self.action = action
@@ -51,13 +54,17 @@ struct OnSizeChangeAlertModifier: ViewModifier {
         content
             .background {
                 GeometryReader { geometry in
-                    VoidView()
+                    Color.clear
                         .onChange(of: geometry.size, initial: true) { oldValue, newValue in
                             switch type {
                             case .either:
                                 switch (oldValue.width == newValue.width, oldValue.height == newValue.height) {
                                 case (true, true):
-                                    break
+                                    guard !firedInitial else {
+                                        break
+                                    }
+                                    firedInitial = true
+                                    action(.both(width: newValue.width, height: newValue.height))
                                 case (true, false):
                                     action(.height(newValue.height))
                                 case (false, true):
