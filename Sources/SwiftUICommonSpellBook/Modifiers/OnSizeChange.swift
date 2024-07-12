@@ -8,69 +8,14 @@
 
 import SwiftUI
 
-extension View {
-    /// Triggers an action when the height or width of a view changes sizes.
-    ///
-    /// - Note: This is always fired at least once when the view is first created and appears.
-    ///
-    /// - Parameters:
-    ///   - type: The property type of the view to watch.
-    ///   - uuid: To identify this instance.
-    ///   - action: The action to perform when the view changes.
-    /// - Returns: A view that will trigger `action` at the appropriate size changes of the view this is applied too.
-    @inlinable
-    public func onSizeChange(
-        of type: OnSizeChangeType,
-        uuid: UUID,
-        perform action: @escaping (_ newSize: SizeChangeValue) -> Void
-    ) -> some View {
-        return modifier(
-            SizeChangeAlertModifier<Self>(
-                type: type,
-                id: AnyHashable(uuid),
-                action: action,
-                lastWidth: nil,
-                lastHeight: nil
-            )
-        )
-    }
-
-    /// Triggers an action when the height or width of a view changes sizes.
-    ///
-    /// - Note: This is always fired at least once when the view is first created and appears.
-    ///
-    /// - Important: The `fileID`, `function` and `line` can be changed but need to be consistent across calls at each site in your applicaiton.
-    ///     They also should create a unique combo between all of your other uses of this function in the app.
-    ///     This is needed in order to differentiate which view changed so that updates are properly propigated properly.
-    ///
-    /// - Parameters:
-    ///   - type: The property type of the view to watch.
-    ///   - fileID: The `#fileID` of the function call, used for hashing.
-    ///   - function: The `#function` of the function call, used for hashing.
-    ///   - line: The `#line` of the function call, used for hashing.
-    ///   - action: The action to perform when the view changes.
-    /// - Returns: A view that will trigger `action` at the appropriate size changes of the view this is applied too.
-    @inlinable
-    public func onSizeChange(
-        of type: OnSizeChangeType,
-        fileID: String = #fileID,
-        function: String = #function,
-        line: Int = #line,
-        perform action: @escaping (_ newSize: SizeChangeValue) -> Void
-    ) -> some View {
-        return modifier(
-            SizeChangeAlertModifier<Self>(
-                type: type,
-                id: AnyHashable("\(fileID)\(function)\(line)"),
-                action: action,
-                lastWidth: nil,
-                lastHeight: nil
-            )
-        )
-    }
+@available(iOS 17, macOS 14, *)
+public enum SizeChangeValue: Hashable, Sendable {
+    case width(Double)
+    case height(Double)
+    case both(width: Double, height: Double)
 }
 
-/// Type of change to watch in ``View.onSizeChange()``/
+@available(iOS 17, macOS 14, *)
 public enum OnSizeChangeType {
     /// When the width or height changes.
     case either
@@ -80,111 +25,57 @@ public enum OnSizeChangeType {
     case height
 }
 
-@usableFromInline
-struct SizeChangeAlertModifier<IDType>: ViewModifier {
-    @usableFromInline
-    let type: OnSizeChangeType
-
-    @usableFromInline
-    let id: AnyHashable
-
-    @usableFromInline
-    let action: (_ newSize: SizeChangeValue) -> Void
-
-    @State
-    var lastWidth: Double?
-
-    @State
-    var lastHeight: Double?
-
-    @State
-    var hasAppeared = false
-
-    @usableFromInline
-    init(
-        type: OnSizeChangeType,
-        id: AnyHashable,
-        action: @escaping (_ newSize: SizeChangeValue) -> Void,
-        lastWidth: Double?,
-        lastHeight: Double?
-    ) {
-//        print("Size Change id: \(id.hashValue)")
-        self.type = type
-        self.id = id
-        self.action = action
-        self.lastWidth = lastWidth
-        self.lastHeight = lastHeight
-    }
-
-    @usableFromInline
-    func body(content: Content) -> some View {
-        content
-            .overlay {
-                GeometryReader { geometry in
-                    VoidView()
-                        .preference(
-                            key: ViewSizeChangedPreferenceKey<IDType>.self,
-                            value: .init(value: .both(width: geometry.size.width, height: geometry.size.height), id: id)
-                        )
-                }
-            }
-            .onPreferenceChange(ViewSizeChangedPreferenceKey<IDType>.self) { value in
-                let anyHashableValue = AnyHashable(value)
-                guard id == value.id,
-                      viewSizeChangeLastValue.updateValue(anyHashableValue, forKey: id) != anyHashableValue,
-                      case let .both(width, height) = value.value else {
-                    return
-                }
-
-                switch (type, width != lastWidth, height != lastHeight) {
-                case (.either, true, true):
-                    action(.both(width: width, height: height))
-                case (.either, true, false),
-                    (.width, true, _):
-                    action(.width(width))
-                case (.either, false, true),
-                    (.height, _, true):
-                    action(.height(height))
-                default:
-                    break
-                }
-            }
-            .onDisappear {
-                viewSizeChangeLastValue.removeValue(forKey: id)
-            }
-    }
-}
-
-@MainActor
-private var viewSizeChangeLastValue: [AnyHashable: AnyHashable] = [:]
-
-struct ViewSizeChangedPreferenceKey<IDType>: PreferenceKey {
-    @usableFromInline
-    struct Value: Hashable {
-        @usableFromInline
-        var value: SizeChangeValue
-
-        @usableFromInline
-        var id: AnyHashable
-    }
-
-    static var defaultValue: Value {
-        Value(
-            value: .both(
-                width: 0,
-                height: 0
-            ),
-            id: AnyHashable(0)
+extension View {
+    @available(iOS 17, macOS 14, *)
+    public func onSizeChange(of type: OnSizeChangeType = .either, _ action: @escaping (SizeChangeValue) -> Void) -> some View {
+        modifier(
+            OnSizeChangeAlertModifier(
+                type: type,
+                action: action
+            )
         )
     }
-
-    static func reduce(value: inout Value, nextValue: () -> Value) {
-        value = nextValue()
-    }
 }
 
-public enum SizeChangeValue: Hashable, Sendable {
-    case width(Double)
-    case height(Double)
-    case both(width: Double, height: Double)
+@available(iOS 17, macOS 14, *)
+struct OnSizeChangeAlertModifier: ViewModifier {
+    let type: OnSizeChangeType
+    let action: (SizeChangeValue) -> Void
+
+    init(type: OnSizeChangeType, action: @escaping (SizeChangeValue) -> Void) {
+        self.type = type
+        self.action = action
+    }
+
+    func body(content: Content) -> some View {
+        content
+            .background {
+                GeometryReader { geometry in
+                    VoidView()
+                        .onChange(of: geometry.size, initial: true) { oldValue, newValue in
+                            switch type {
+                            case .either:
+                                switch (oldValue.width == newValue.width, oldValue.height == newValue.height) {
+                                case (true, true):
+                                    break
+                                case (true, false):
+                                    action(.height(newValue.height))
+                                case (false, true):
+                                    action(.width(newValue.width))
+                                case (false, false):
+                                    action(.both(width: newValue.width, height: newValue.height))
+                                }
+                            case .width:
+                                if oldValue.width != newValue.width {
+                                    action(.width(newValue.width))
+                                }
+                            case .height:
+                                if oldValue.height != newValue.height {
+                                    action(.width(newValue.height))
+                                }
+                            }
+                        }
+                }
+            }
+    }
 }
