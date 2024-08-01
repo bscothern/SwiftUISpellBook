@@ -19,17 +19,26 @@ extension View {
 struct OnGlobalPositionChange: ViewModifier {
     let action: (_ globalFrame: CGRect) -> Void
 
+    @State
+    var isDisappearing = false
+
     init(action: @escaping (_ globalFrame: CGRect) -> Void) {
         self.action = action
     }
 
     func body(content: Content) -> some View {
         content
+            .onDisappear {
+                isDisappearing = true
+            }
             .background {
                 GeometryReader { geometry in
                     let globalFrame = geometry.frame(in: GlobalCoordinateSpace())
                     VoidView()
                         .onChange(of: globalFrame, initial: true) { _, newValue in
+                            guard !isDisappearing else {
+                                return
+                            }
                             action(newValue)
                         }
                 }

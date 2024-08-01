@@ -9,21 +9,19 @@
 import Foundation
 import SwiftUI
 
-public struct BetterLocalizedStringKey {
-    @usableFromInline
-    let localizedStringKey: LocalizedStringKey
-
-    @usableFromInline
-    let tableName: String?
-
-    @usableFromInline
-    let bundle: Bundle?
-
-    @usableFromInline
-    let comment: StaticString?
+public struct BetterLocalizedStringKey: Sendable {
+    public let localizedStringKey: LocalizedStringKey
+    public let tableName: String?
+    public let bundle: Bundle?
+    public let comment: StaticString?
 
     @inlinable
-    public init(_ localizedStringKey: LocalizedStringKey, tableName: String? = nil, bundle: Bundle? = nil, comment: StaticString? = nil) {
+    public init(
+        _ localizedStringKey: LocalizedStringKey,
+        tableName: String? = nil,
+        bundle: Bundle? = nil,
+        comment: StaticString? = nil
+    ) {
         self.localizedStringKey = localizedStringKey
         self.tableName = tableName
         self.bundle = bundle
@@ -31,7 +29,12 @@ public struct BetterLocalizedStringKey {
     }
 
     @inlinable
-    public init(_ value: String, tableName: String? = nil, bundle: Bundle? = nil, comment: StaticString? = nil) {
+    public init(
+        _ value: String,
+        tableName: String? = nil,
+        bundle: Bundle? = nil,
+        comment: StaticString? = nil
+    ) {
         self.init(
             LocalizedStringKey(value),
             tableName: tableName,
