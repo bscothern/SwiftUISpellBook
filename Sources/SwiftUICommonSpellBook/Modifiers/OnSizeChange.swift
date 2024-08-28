@@ -45,6 +45,9 @@ struct OnSizeChangeAlertModifier: ViewModifier {
     @State
     var firedInitial = false
 
+    @State
+    var isDisappearing = false
+
     init(type: OnSizeChangeType, action: @escaping (SizeChangeValue) -> Void) {
         self.type = type
         self.action = action
@@ -52,10 +55,16 @@ struct OnSizeChangeAlertModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         content
+            .onWillDisappear {
+                isDisappearing = true
+            }
             .background {
                 GeometryReader { geometry in
                     Color.clear
                         .onChange(of: geometry.size, initial: true) { oldValue, newValue in
+                            guard !isDisappearing else {
+                                return
+                            }
                             switch type {
                             case .either:
                                 switch (oldValue.width == newValue.width, oldValue.height == newValue.height) {

@@ -28,7 +28,7 @@ struct OnGlobalPositionChange: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .onDisappear {
+            .onWillDisappear {
                 isDisappearing = true
             }
             .background {
