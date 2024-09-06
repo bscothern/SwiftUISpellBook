@@ -1,3 +1,3 @@
 # SwiftUISpellBook
 
-A description of this package.
+A bunch of utility methods, modifiers, and types for building SwiftUI apps.
