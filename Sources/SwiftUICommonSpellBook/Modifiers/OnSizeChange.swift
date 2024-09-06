@@ -55,6 +55,9 @@ struct OnSizeChangeAlertModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         content
+            .onWillAppear {
+                isDisappearing = false
+            }
             .onWillDisappear {
                 isDisappearing = true
             }

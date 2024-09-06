@@ -1,5 +1,5 @@
 //
-//  OnWillDisappear.swift
+//  OnWillAppear.swift
 //  SwiftUISpellBook
 //
 //  Created by Braden Scothern on 8/28/24.
@@ -11,13 +11,13 @@ import UIKit
 
 extension View {
     @inlinable
-    public func onWillDisappear(_ action: @escaping @MainActor () -> Void) -> some View {
-        modifier(OnWillDisappearViewModifier(action: action))
+    public func onWillAppear(_ action: @escaping @MainActor () -> Void) -> some View {
+        modifier(OnWillAppearViewModifier(action: action))
     }
 }
 
 @usableFromInline
-struct OnWillDisappearViewModifier: ViewModifier {
+struct OnWillAppearViewModifier: ViewModifier {
     @usableFromInline
     let action: @MainActor () -> Void
 
@@ -29,12 +29,12 @@ struct OnWillDisappearViewModifier: ViewModifier {
     @usableFromInline
     func body(content: Content) -> some View {
         content
-            .background(OnWillDisappearView(action: action))
+            .background(OnWillAppearView(action: action))
     }
 }
 
 @usableFromInline
-struct OnWillDisappearView: UIViewControllerRepresentable {
+struct OnWillAppearView: UIViewControllerRepresentable {
     @usableFromInline
     final class UIViewControllerType: UIViewController {
         @usableFromInline
@@ -51,8 +51,8 @@ struct OnWillDisappearView: UIViewControllerRepresentable {
             fatalError("init(coder:) has not been implemented")
         }
 
-        override func viewWillDisappear(_ animated: Bool) {
-            super.viewWillDisappear(animated)
+        override func viewWillAppear(_ animated: Bool) {
+            super.viewWillAppear(animated)
             action()
         }
     }
