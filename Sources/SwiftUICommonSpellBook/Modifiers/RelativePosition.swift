@@ -1,8 +1,8 @@
 //
-//  ScaledPosition.swift
+//  RelativePosition.swift
 //  SwiftUISpellBook
 //
-//  Created by Braden Scothern on 9/5/24.
+//  Created by Braden Scothern on 9/6/24.
 //  Copyright © 2020-2024 Braden Scothern. All rights reserved.
 //
 
@@ -11,10 +11,9 @@ import SwiftUI
 
 @available(iOS 16, *)
 extension View {
-    public func scaledPosition(_ scale: Double, position: ScaledPositionValue) -> some View {
+    public func relativePosition(_ position: RelativePositionValue) -> some View {
         modifier(
-            ScaledPosition(
-                scale: scale,
+            RelativePosition(
                 position: position
             )
         )
@@ -22,7 +21,7 @@ extension View {
 }
 
 @available(iOS 16, *)
-public enum ScaledPositionValue: CaseIterable, Identifiable {
+public enum RelativePositionValue: CaseIterable, Identifiable {
     case center
     case left
     case right
@@ -61,9 +60,9 @@ public enum ScaledPositionValue: CaseIterable, Identifiable {
 
 @available(iOS 16, *)
 @usableFromInline
-struct ScaledPosition: ViewModifier {
+struct RelativePosition: ViewModifier {
     @usableFromInline
-    enum ScaledPositionSimpleValue {
+    enum RelativePositionSimpleValue {
         case center
         case left
         case right
@@ -76,14 +75,10 @@ struct ScaledPosition: ViewModifier {
     }
 
     @usableFromInline
-    let scale: Double
+    let position: RelativePositionValue
 
     @usableFromInline
-    let position: ScaledPositionValue
-
-    @usableFromInline
-    init(scale: Double, position: ScaledPositionValue) {
-        self.scale = scale
+    init(position: RelativePositionValue) {
         self.position = position
     }
 
@@ -91,7 +86,7 @@ struct ScaledPosition: ViewModifier {
     func body(content: Content) -> some View {
         let isLeftToRight = Locale.characterDirection(forLanguage: Locale.current.language.languageCode?.identifier ?? "") == .leftToRight
 
-        var position: ScaledPositionSimpleValue
+        var position: RelativePositionSimpleValue
         switch (self.position, isLeftToRight) {
         case (.leading, true):
             position = .left
@@ -138,20 +133,15 @@ struct ScaledPosition: ViewModifier {
         }
 
         return GeometryReader { geometry in
-            let scaledContent = content.frame(
-                width: geometry.size.width * scale,
-                height: geometry.size.height * scale
-            )
-
             switch position {
             case .center:
-                scaledContent
+                content
                     .centered()
             case .left:
                 HStack {
                     VStack {
                         Spacer()
-                        scaledContent
+                        content
                         Spacer()
                     }
                     Spacer()
@@ -161,7 +151,7 @@ struct ScaledPosition: ViewModifier {
                     Spacer()
                     VStack {
                         Spacer()
-                        scaledContent
+                        content
                         Spacer()
                     }
                 }
@@ -169,7 +159,7 @@ struct ScaledPosition: ViewModifier {
                 VStack {
                     HStack {
                         Spacer()
-                        scaledContent
+                        content
                         Spacer()
                     }
                     Spacer()
@@ -177,7 +167,7 @@ struct ScaledPosition: ViewModifier {
             case .topLeft:
                 VStack {
                     HStack {
-                        scaledContent
+                        content
                         Spacer()
                     }
                     Spacer()
@@ -186,7 +176,7 @@ struct ScaledPosition: ViewModifier {
                 VStack {
                     HStack {
                         Spacer()
-                        scaledContent
+                        content
                     }
                     Spacer()
                 }
@@ -195,7 +185,7 @@ struct ScaledPosition: ViewModifier {
                     Spacer()
                     HStack {
                         Spacer()
-                        scaledContent
+                        content
                         Spacer()
                     }
                 }
@@ -203,7 +193,7 @@ struct ScaledPosition: ViewModifier {
                 VStack {
                     Spacer()
                     HStack {
-                        scaledContent
+                        content
                         Spacer()
                     }
                 }
@@ -212,7 +202,7 @@ struct ScaledPosition: ViewModifier {
                     Spacer()
                     HStack {
                         Spacer()
-                        scaledContent
+                        content
                     }
                 }
             }
