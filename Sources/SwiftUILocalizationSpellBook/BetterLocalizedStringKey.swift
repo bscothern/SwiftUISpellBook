@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-public struct BetterLocalizedStringKey: Sendable {
+public struct BetterLocalizedStringKey {
     public let localizedStringKey: LocalizedStringKey
     public let tableName: String?
     public let bundle: Bundle?
@@ -41,6 +41,20 @@ public struct BetterLocalizedStringKey: Sendable {
             bundle: bundle,
             comment: comment
         )
+    }
+    
+    public var value: String {
+        String(
+            localized: .init(localizedStringKey.stringKey ?? ""),
+            table: tableName,
+            bundle: bundle
+        )
+    }
+}
+
+extension LocalizedStringKey {
+    var stringKey: String? {
+        Mirror(reflecting: self).children.first(where: { $0.label == "key" })?.value as? String
     }
 }
 
