@@ -66,3 +66,12 @@ extension BetterLocalizedStringKey: Equatable {
         lhs.comment?.description == rhs.comment?.description
     }
 }
+
+extension BetterLocalizedStringKey: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(localizedStringKey.stringKey ?? String(describing: localizedStringKey))
+        hasher.combine(tableName)
+        hasher.combine(bundle)
+        hasher.combine(comment?.description)
+    }
+}
