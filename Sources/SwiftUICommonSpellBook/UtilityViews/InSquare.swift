@@ -20,7 +20,8 @@ public struct InSquare<Content: View>: View {
         GeometryReader { geometry in
             let smallerSize = geometry.size.width < geometry.size.height ? geometry.size.width : geometry.size.height
             content(smallerSize)
-                .frame(width: smallerSize, height: smallerSize)
+                .frame(width: smallerSize, height: smallerSize, alignment: .center)
+                .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
         }
     }
 }
