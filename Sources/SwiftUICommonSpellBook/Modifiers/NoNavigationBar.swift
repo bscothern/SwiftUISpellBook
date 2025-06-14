@@ -21,14 +21,23 @@ struct NoNavigationbarModifier: ViewModifier {
     @usableFromInline
     init() {}
 
+    @ViewBuilder
     @usableFromInline
     func body(content: Content) -> some View {
         #if os(macOS)
-        return content
+        content
         #else
-        return content
-            .navigationBarTitle("")
-            .navigationBarHidden(true)
+        if #available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *) {
+            content
+                .toolbarVisibility(.hidden, for: .navigationBar)
+        } else if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+            content
+                .toolbar(.hidden, for: .navigationBar)
+        } else {
+            content
+                .navigationBarTitle("")
+                .navigationBarHidden(true)
+        }
         #endif
     }
 }

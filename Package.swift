@@ -25,10 +25,6 @@ let package = Package(
             targets: ["SwiftUICommonSpellBook"]
         ),
         .library(
-            name: "SwiftUIDebugToolsSpellBook",
-            targets: ["SwiftUIDebugToolsSpellBook"]
-        ),
-        .library(
             name: "SwiftUILocalizationSpellBook",
             targets: ["SwiftUILocalizationSpellBook"]
         ),
@@ -37,15 +33,13 @@ let package = Package(
             targets: ["SwiftUIMissingComponentsSpellBook"]
         ),
     ],
-    dependencies: [
-    ],
+    dependencies: [    ],
     targets: [
         .target(
             name: "SwiftUISpellBook",
             dependencies: [
                 .target(name: "SwiftUIBundleFinder"),
                 .target(name: "SwiftUICommonSpellBook"),
-                .target(name: "SwiftUIDebugToolsSpellBook"),
                 .target(name: "SwiftUILocalizationSpellBook"),
                 .target(name: "SwiftUIMissingComponentsSpellBook"),
             ]
@@ -56,13 +50,6 @@ let package = Package(
         .target(
             name: "SwiftUICommonSpellBook",
             dependencies: [
-                .target(name: "SwiftUIMissingComponentsSpellBook"),
-            ]
-        ),
-        .target(
-            name: "SwiftUIDebugToolsSpellBook",
-            dependencies: [
-                .target(name: "SwiftUICommonSpellBook"),
                 .target(name: "SwiftUIMissingComponentsSpellBook"),
             ]
         ),

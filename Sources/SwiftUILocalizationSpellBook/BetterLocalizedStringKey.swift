@@ -43,6 +43,7 @@ public struct BetterLocalizedStringKey: Sendable {
         )
     }
 
+    @inlinable
     public var value: String {
         String(
             localized: .init(localizedStringKey.stringKey ?? ""),
@@ -53,12 +54,14 @@ public struct BetterLocalizedStringKey: Sendable {
 }
 
 extension LocalizedStringKey {
+    @usableFromInline
     var stringKey: String? {
         Mirror(reflecting: self).children.first { $0.label == "key" }?.value as? String
     }
 }
 
 extension BetterLocalizedStringKey: Equatable {
+    @inlinable
     public static func == (lhs: BetterLocalizedStringKey, rhs: BetterLocalizedStringKey) -> Bool {
         lhs.localizedStringKey == rhs.localizedStringKey &&
         lhs.tableName == rhs.tableName &&
@@ -68,6 +71,7 @@ extension BetterLocalizedStringKey: Equatable {
 }
 
 extension BetterLocalizedStringKey: Hashable {
+    @inlinable
     public func hash(into hasher: inout Hasher) {
         hasher.combine(localizedStringKey.stringKey ?? String(describing: localizedStringKey))
         hasher.combine(tableName)

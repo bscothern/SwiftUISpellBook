@@ -15,7 +15,23 @@ public protocol BundleFinder: AnyObject {
 }
 
 extension Bundle {
-    nonisolated(unsafe) private static var foundBundles: [String: Bundle] = [:]
+    static let lock: NSRecursiveLock = .init()
+    nonisolated(unsafe) private static var _foundBundles: [String: Bundle] = [:]
+    private static var foundBundles: [String: Bundle] {
+        get {
+            lock.withLock { _foundBundles }
+        }
+        set {
+            lock.withLock { _foundBundles = newValue }
+        }
+        _modify {
+            lock.lock()
+            defer {
+                lock.unlock()
+            }
+            yield &_foundBundles
+        }
+    }
 
     public static func bundleFinder(_ finder: BundleFinder.Type) -> Bundle {
         #if !DEBUG

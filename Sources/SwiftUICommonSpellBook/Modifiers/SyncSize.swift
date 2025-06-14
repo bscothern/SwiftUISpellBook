@@ -99,7 +99,23 @@ final class SyncSizePublisher: Subject, Sendable {
     let id: UUID
     let base: PassthroughSubject<CGSize, Never> = .init()
     
-    nonisolated(unsafe) var isRunning = true
+    let lock = NSRecursiveLock()
+    nonisolated(unsafe) var _isRunning = true
+    var isRunning: Bool {
+        get {
+            lock.withLock { _isRunning }
+        }
+        set {
+            lock.withLock { _isRunning = newValue }
+        }
+        _modify {
+            lock.lock()
+            defer {
+                lock.unlock()
+            }
+            yield &_isRunning
+        }
+    }
 
     @MainActor
     static func `for`(id: UUID) -> SyncSizePublisher {
