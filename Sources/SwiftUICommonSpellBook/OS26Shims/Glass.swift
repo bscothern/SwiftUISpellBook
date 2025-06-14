@@ -87,7 +87,6 @@ public struct Glass: Equatable, Sendable {
     }
 }
 #else
-@inlinable
 public struct Glass: Equatable, Sendable {
     @usableFromInline
     struct Value: Equatable, Sendable {
@@ -106,6 +105,11 @@ public struct Glass: Equatable, Sendable {
     
     @usableFromInline
     var value: Value
+    
+    @usableFromInline
+    init(value: Value) {
+        self.value = value
+    }
     
     @inlinable
     public static var regular: Glass {

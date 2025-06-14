@@ -12,12 +12,12 @@ import SwiftUI
 var previousPreferenceKeys: [UUID: any PreferenceKey.Type] = [:]
 
 @MainActor
-var nextGeneratedPreferenceKey: [ObjectIdentifier: any ChainablePreferenceKey.Type] = [:]
+var nextGeneratedPreferenceKey: [ObjectIdentifier: any (Chainable & PreferenceKey).Type] = [:]
 
 @MainActor
 public enum PreferenceKeyGenerator<BasePreferenceKey> where BasePreferenceKey: PreferenceKey {
     @MainActor
-    enum PreferenceKeyChain<Chain>: @MainActor ChainablePreferenceKey {
+    enum PreferenceKeyChain<Chain>: Chainable, @preconcurrency PreferenceKey {
         typealias Value = BasePreferenceKey.Value
 
         static var typeID: ObjectIdentifier {
@@ -32,11 +32,11 @@ public enum PreferenceKeyGenerator<BasePreferenceKey> where BasePreferenceKey: P
             BasePreferenceKey.reduce(value: &value, nextValue: nextValue)
         }
 
-        static func nextLink() -> any ChainablePreferenceKey.Type {
+        static func nextLink() -> any (Chainable & PreferenceKey).Type {
             PreferenceKeyChain<Self>.self
         }
 
-        static func createNext() -> any ChainablePreferenceKey.Type {
+        static func createNext() -> any (Chainable & PreferenceKey).Type {
             let value = nextGeneratedPreferenceKey[typeID, default: PreferenceKeyChain<Void>.self]
             nextGeneratedPreferenceKey[typeID] = value.nextLink()
             return value
@@ -53,10 +53,8 @@ public enum PreferenceKeyGenerator<BasePreferenceKey> where BasePreferenceKey: P
     }
 }
 
-typealias ChainablePreferenceKey = Chainable & PreferenceKey
-
 @MainActor
 protocol Chainable {
-    static func nextLink() -> any ChainablePreferenceKey.Type
-    static func createNext() -> any ChainablePreferenceKey.Type
+    static func nextLink() -> any (Chainable & PreferenceKey).Type
+    static func createNext() -> any (Chainable & PreferenceKey).Type
 }
