@@ -10,12 +10,11 @@ import SwiftUI
 
 /// A type that like `Never` can never be created but it conforms to the `View` protocol.
 public enum NeverView: View {
-    public typealias Body = Self
+    public typealias Body = EmptyView
 
     @inline(never)
-    public var body: Self {
-        fatalError("Unreachable")
-        return self
+    public var body: Body {
+        let _ = fatalError("Unreachable")
     }
 }
 

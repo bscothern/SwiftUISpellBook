@@ -14,8 +14,10 @@ var previousPreferenceKeys: [UUID: any PreferenceKey.Type] = [:]
 @MainActor
 var nextGeneratedPreferenceKey: [ObjectIdentifier: any ChainablePreferenceKey.Type] = [:]
 
+@MainActor
 public enum PreferenceKeyGenerator<BasePreferenceKey> where BasePreferenceKey: PreferenceKey {
-    enum PreferenceKeyChain<Chain>: ChainablePreferenceKey {
+    @MainActor
+    enum PreferenceKeyChain<Chain>: @MainActor ChainablePreferenceKey {
         typealias Value = BasePreferenceKey.Value
 
         static var typeID: ObjectIdentifier {
@@ -35,27 +37,25 @@ public enum PreferenceKeyGenerator<BasePreferenceKey> where BasePreferenceKey: P
         }
 
         static func createNext() -> any ChainablePreferenceKey.Type {
-            MainActor.assumeIsolated {
-                let value = nextGeneratedPreferenceKey[typeID, default: PreferenceKeyChain<Void>.self]
-                nextGeneratedPreferenceKey[typeID] = value.nextLink()
-                return value
-            }
+            let value = nextGeneratedPreferenceKey[typeID, default: PreferenceKeyChain<Void>.self]
+            nextGeneratedPreferenceKey[typeID] = value.nextLink()
+            return value
         }
     }
 
     public static func generate(id: UUID) -> any PreferenceKey.Type {
-        MainActor.assumeIsolated {
-            guard let previous = previousPreferenceKeys[id] else {
-                let value = PreferenceKeyChain<Void>.createNext()
-                previousPreferenceKeys[id] = value
-                return value
-            }
-            return previous
+        guard let previous = previousPreferenceKeys[id] else {
+            let value = PreferenceKeyChain<Void>.createNext()
+            previousPreferenceKeys[id] = value
+            return value
         }
+        return previous
     }
 }
 
 typealias ChainablePreferenceKey = Chainable & PreferenceKey
+
+@MainActor
 protocol Chainable {
     static func nextLink() -> any ChainablePreferenceKey.Type
     static func createNext() -> any ChainablePreferenceKey.Type

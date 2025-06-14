@@ -11,7 +11,7 @@ public struct CoinToggle<Side1Content: View, Side2Content: View>: View {
     public enum Mode {
         case side1
         case side2
-        
+
         mutating func toggle() {
             switch self {
             case .side1:
@@ -24,19 +24,19 @@ public struct CoinToggle<Side1Content: View, Side2Content: View>: View {
 
     @State
     var mode: Mode = .side1
-    
+
     @State
     var rotation: CGFloat = 0
-    
+
     @Binding
     var showingFront: Bool
-    
+
     @State
     var animation: Animation?
-    
+
     let side1: () -> Side1Content
     let side2: () -> Side2Content
-    
+
     public var body: some View {
         Button {
             toggle()
@@ -98,7 +98,7 @@ public struct CoinToggle<Side1Content: View, Side2Content: View>: View {
     @Previewable
     @State
     var showingFront: Bool = true
-    
+
     CoinToggle(showingFront: $showingFront) {
         Color.green
             .clipShape(Circle())

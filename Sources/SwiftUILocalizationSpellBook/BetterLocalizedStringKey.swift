@@ -42,7 +42,7 @@ public struct BetterLocalizedStringKey: Sendable {
             comment: comment
         )
     }
-    
+
     public var value: String {
         String(
             localized: .init(localizedStringKey.stringKey ?? ""),
@@ -54,7 +54,7 @@ public struct BetterLocalizedStringKey: Sendable {
 
 extension LocalizedStringKey {
     var stringKey: String? {
-        Mirror(reflecting: self).children.first(where: { $0.label == "key" })?.value as? String
+        Mirror(reflecting: self).children.first { $0.label == "key" }?.value as? String
     }
 }
 

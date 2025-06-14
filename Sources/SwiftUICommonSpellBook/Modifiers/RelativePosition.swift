@@ -132,7 +132,7 @@ struct RelativePosition: ViewModifier {
             position = .bottomRight
         }
 
-        return GeometryReader { geometry in
+        return GeometryReader { _ in
             switch position {
             case .center:
                 content

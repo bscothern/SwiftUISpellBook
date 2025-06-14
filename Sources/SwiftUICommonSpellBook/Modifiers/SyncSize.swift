@@ -22,25 +22,24 @@ var valuesToUUIDs: [AnyHashable: UUID] = [:]
 
 extension View {
     @available(iOS 17, macOS 14, *)
+    @MainActor
     public func syncSize<T>(type: SyncSizeType = .both, id: T.Type) -> some View {
-        MainActor.assumeIsolated {
-            let objectID = ObjectIdentifier(id)
-            let uuid = valuesToUUIDs[objectID, default: UUID()]
-            valuesToUUIDs[objectID] = uuid
-            return modifier(SyncSize(type: type, id: uuid))
-        }
+        let objectID = ObjectIdentifier(id)
+        let uuid = valuesToUUIDs[objectID, default: UUID()]
+        valuesToUUIDs[objectID] = uuid
+        return modifier(SyncSize(type: type, id: uuid))
     }
 
     @available(iOS 17, macOS 14, *)
+    @MainActor
     public func syncSize<T>(type: SyncSizeType = .both, id: T) -> some View where T: Hashable {
-        MainActor.assumeIsolated {
-            let uuid = valuesToUUIDs[id, default: UUID()]
-            valuesToUUIDs[id] = uuid
-            return modifier(SyncSize(type: type, id: uuid))
-        }
+        let uuid = valuesToUUIDs[id, default: UUID()]
+        valuesToUUIDs[id] = uuid
+        return modifier(SyncSize(type: type, id: uuid))
     }
 
     @available(iOS 17, macOS 14, *)
+    @MainActor
     public func syncSize(type: SyncSizeType = .both, id: UUID) -> some View {
         modifier(SyncSize(type: type, id: id))
     }
@@ -60,32 +59,30 @@ struct SyncSize: ViewModifier {
     }
 
     func body(content: Content) -> some View {
-        MainActor.assumeIsolated {
-            let publisher = SyncSizePublisher.for(id: id)
-            return content
-                .frame(width: size?.width, height: size?.height)
-                .onReceive(publisher) { value in
-                    guard let size = size else {
-                        self.size = value
-                        return
-                    }
-                    if size.width < value.width {
-                        self.size?.width = value.width
-                    }
-                    if size.height < value.height {
-                        self.size?.height = value.height
-                    }
+        let publisher = SyncSizePublisher.for(id: id)
+        return content
+            .frame(width: size?.width, height: size?.height)
+            .onReceive(publisher) { value in
+                guard let size = size else {
+                    self.size = value
+                    return
                 }
-                .background {
-                    GeometryReader { geometry in
-                        VoidView()
-                            .onChange(of: geometry.size, initial: true) {
-                                guard !(geometry.size == .zero && self.size == nil) else {
-                                    return
-                                }
-                                publisher.send(geometry.size)
+                if size.width < value.width {
+                    self.size?.width = value.width
+                }
+                if size.height < value.height {
+                    self.size?.height = value.height
+                }
+            }
+            .background {
+                GeometryReader { geometry in
+                    VoidView()
+                        .onChange(of: geometry.size, initial: true) {
+                            guard !(geometry.size == .zero && self.size == nil) else {
+                                return
                             }
-                    }
+                            publisher.send(geometry.size)
+                        }
                 }
         }
     }
