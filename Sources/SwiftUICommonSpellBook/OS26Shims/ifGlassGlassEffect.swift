@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-#if swift(>=6.2)
+#if swift(>=6.2) || GlassCompatibliity
 @available(iOS, obsoleted: 26, renamed: "glassEffect(_:in:isEnabled:)")
 @available(macOS, obsoleted: 26, renamed: "glassEffect(_:in:isEnabled:)")
 @available(tvOS, obsoleted: 26, renamed: "glassEffect(_:in:isEnabled:)")

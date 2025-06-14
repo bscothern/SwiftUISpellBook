@@ -54,7 +54,7 @@ struct StackOrDoubleColumnNavigationViewStyleViewMoifier: ViewModifier {
     }
 }
 
-public enum StackOrDoubleColumnMode {
+public enum StackOrDoubleColumnMode: Sendable {
     case stack
     case doubleColumn
 }

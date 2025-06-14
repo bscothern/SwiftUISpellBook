@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+#if swift(>=6.2) || GlassCompatibliity
 extension View {
     @inlinable
     @ViewBuilder
@@ -21,3 +22,15 @@ extension View {
         }
     }
 }
+#else
+extension View {
+    @inlinable
+    @ViewBuilder
+    public nonisolated func ifGlassGlassEffectID(
+        _ id: (some Hashable & Sendable)?,
+        in namespace: Namespace.ID
+    ) -> some View {
+        self
+    }
+}
+#endif

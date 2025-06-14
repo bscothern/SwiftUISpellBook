@@ -11,4 +11,3 @@
 @_exported import SwiftUIDebugToolsSpellBook
 @_exported import SwiftUILocalizationSpellBook
 @_exported import SwiftUIMissingComponentsSpellBook
-@_exported import SwiftUIPopNavigationSpellBook

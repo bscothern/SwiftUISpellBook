@@ -7,15 +7,32 @@
 
 import SwiftUI
 
-#if swift(>=6.2)
+#if swift(>=6.2) || GlassCompatibliity
 public struct Glass: Equatable, Sendable {
+    @usableFromInline
     struct Old: Equatable, Sendable {
+        @usableFromInline
         var tint: Color?
-        var interactive: Bool = false
+        
+        @usableFromInline
+        var interactive: Bool
+        
+        @usableFromInline
+        init(tint: Color? = nil, interactive: Bool = false) {
+            self.tint = tint
+            self.interactive = interactive
+        }
     }
 
+    @usableFromInline
     var value: any Sendable
+    
+    @usableFromInline
+    init(value: any Sendable) {
+        self.value = value
+    }
 
+    @inlinable
     public static var regular: Glass {
         if #available(iOS 26, macOS 26, tvOS 26, watchOS 26, visionOS 26, *) {
             Self(value: SwiftUI.Glass.regular)
@@ -24,6 +41,7 @@ public struct Glass: Equatable, Sendable {
         }
     }
 
+    @inlinable
     public func tint(_ color: Color?) -> Glass {
         if #available(iOS 26, macOS 26, tvOS 26, watchOS 26, visionOS 26, *),
            let glass = value as? SwiftUI.Glass {
@@ -37,6 +55,7 @@ public struct Glass: Equatable, Sendable {
         }
     }
 
+    @inlinable
     public func interactive(_ isEnabled: Bool = true) -> Glass {
         if #available(iOS 26, macOS 26, tvOS 26, watchOS 26, visionOS 26, *),
            let glass = value as? SwiftUI.Glass {
@@ -50,6 +69,7 @@ public struct Glass: Equatable, Sendable {
         }
     }
 
+    @inlinable
     public static func == (a: Glass, b: Glass) -> Bool {
         if #available(iOS 26, macOS 26, tvOS 26, watchOS 26, visionOS 26, *) {
            if let aGlass = a.value as? SwiftUI.Glass,
@@ -67,30 +87,46 @@ public struct Glass: Equatable, Sendable {
     }
 }
 #else
+@inlinable
 public struct Glass: Equatable, Sendable {
+    @usableFromInline
     struct Value: Equatable, Sendable {
-        var tint: Color? = nil
-        var interactive: Bool = false
+        @usableFromInline
+        var tint: Color?
+        
+        @usableFromInline
+        var interactive: Bool
+        
+        @usableFromInline
+        init(tint: Color? = nil, interactive: Bool = false) {
+            self.tint = tint
+            self.interactive = interactive
+        }
     }
     
+    @usableFromInline
     var value: Value
     
+    @inlinable
     public static var regular: Glass {
         Self(value: Value())
     }
     
+    @inlinable
     public func tint(_ color: Color?) -> Glass {
         var copy = self
         copy.value.tint = color
         return copy
     }
     
+    @inlinable
     public func interactive(_ isEnabled: Bool = true) -> Glass {
         var copy = self
         copy.value.interactive = isEnabled
         return copy
     }
     
+    @inlinable
     public static func == (a: Glass, b: Glass) -> Bool {
         a.value == b.value
     }

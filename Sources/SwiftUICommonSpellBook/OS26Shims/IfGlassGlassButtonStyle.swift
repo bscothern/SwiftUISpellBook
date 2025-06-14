@@ -27,6 +27,7 @@ extension IfGlassGlassButtonStyle {
     }
 }
 
+#if swift(>=6.2) || GlassCompatibliity
 extension View {
     @inlinable
     @_disfavoredOverload
@@ -39,3 +40,13 @@ extension View {
         }
     }
 }
+#else
+extension View {
+    @inlinable
+    @_disfavoredOverload
+    @ViewBuilder
+    public func buttonStyle<ElseStyle>(_ buttonStyle: IfGlassGlassButtonStyle<ElseStyle>) -> some View where ElseStyle: PrimitiveButtonStyle {
+        self.buttonStyle(buttonStyle.elseStyle)
+    }
+}
+#endif

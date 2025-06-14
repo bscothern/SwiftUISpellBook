@@ -6,7 +6,7 @@
 //  Copyright © 2020-2024 Braden Scothern. All rights reserved.
 //
 
-import Combine
+@preconcurrency import Combine
 import Foundation
 import SwiftUI
 
@@ -89,7 +89,7 @@ struct SyncSize: ViewModifier {
 }
 
 @available(iOS 17, macOS 14, *)
-final class SyncSizePublisher: Subject {
+final class SyncSizePublisher: Subject, Sendable {
     typealias Output = CGSize
     typealias Failure = Never
 
@@ -98,7 +98,8 @@ final class SyncSizePublisher: Subject {
 
     let id: UUID
     let base: PassthroughSubject<CGSize, Never> = .init()
-    var isRunning = true
+    
+    nonisolated(unsafe) var isRunning = true
 
     @MainActor
     static func `for`(id: UUID) -> SyncSizePublisher {

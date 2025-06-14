@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+#if swift(>=6.2) || GlassCompatibliity
 @available(iOS, obsoleted: 26, renamed: "glassEffectUnion(id:namespace:)")
 @available(macOS, obsoleted: 26, renamed: "glassEffectUnion(id:namespace:)")
 @available(tvOS, obsoleted: 26, renamed: "glassEffectUnion(id:namespace:)")
@@ -28,3 +29,17 @@ extension View {
         }
     }
 }
+#else
+extension View {
+    @MainActor
+    @preconcurrency
+    @inlinable
+    @ViewBuilder
+    public func ifGlassGlassEffectUnion(
+        id: (some Hashable & Sendable)?,
+        namespace: Namespace.ID
+    ) -> some View {
+        self
+    }
+}
+#endif

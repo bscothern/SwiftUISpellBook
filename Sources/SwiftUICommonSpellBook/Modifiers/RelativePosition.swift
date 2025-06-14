@@ -59,7 +59,9 @@ public enum RelativePositionValue: CaseIterable, Identifiable {
 }
 
 @available(iOS 16, *)
+@MainActor
 @usableFromInline
+@preconcurrency
 struct RelativePosition: ViewModifier {
     @usableFromInline
     enum RelativePositionSimpleValue {
@@ -82,128 +84,128 @@ struct RelativePosition: ViewModifier {
         self.position = position
     }
 
+    @ViewBuilder
     @usableFromInline
     func body(content: Content) -> some View {
         let isLeftToRight = Locale.characterDirection(forLanguage: Locale.current.language.languageCode?.identifier ?? "") == .leftToRight
 
-        var position: RelativePositionSimpleValue
-        switch (self.position, isLeftToRight) {
-        case (.leading, true):
-            position = .left
-        case (.leading, false):
-            position = .right
-        case (.trailing, true):
-            position = .right
-        case (.trailing, false):
-            position = .left
-        case (.bottomTrailing, true):
-            position = .bottomRight
-        case (.bottomTrailing, false):
-            position = .bottomLeft
-        case (.topLeading, true):
-            position = .topLeft
-        case (.topLeading, false):
-            position = .topRight
-        case (.topTrailing, true):
-            position = .topRight
-        case (.topTrailing, false):
-            position = .topLeft
-        case (.bottomLeading, true):
-            position = .bottomLeft
-        case (.bottomLeading, false):
-            position = .bottomRight
-        case (.center, _):
-            position = .center
-        case (.left, _):
-            position = .left
-        case (.right, _):
-            position = .right
-        case (.top, _):
-            position = .top
-        case (.topLeft, _):
-            position = .topLeft
-        case (.topRight, _):
-            position = .topRight
-        case (.bottom, _):
-            position = .bottom
-        case (.bottomLeft, _):
-            position = .bottomLeft
-        case (.bottomRight, _):
-            position = .bottomRight
+        var position: RelativePositionSimpleValue {
+            switch (self.position, isLeftToRight) {
+            case (.leading, true):
+                .left
+            case (.leading, false):
+                .right
+            case (.trailing, true):
+                .right
+            case (.trailing, false):
+                .left
+            case (.bottomTrailing, true):
+                .bottomRight
+            case (.bottomTrailing, false):
+                .bottomLeft
+            case (.topLeading, true):
+                .topLeft
+            case (.topLeading, false):
+                .topRight
+            case (.topTrailing, true):
+                .topRight
+            case (.topTrailing, false):
+                .topLeft
+            case (.bottomLeading, true):
+                .bottomLeft
+            case (.bottomLeading, false):
+                .bottomRight
+            case (.center, _):
+                .center
+            case (.left, _):
+                .left
+            case (.right, _):
+                .right
+            case (.top, _):
+                .top
+            case (.topLeft, _):
+                .topLeft
+            case (.topRight, _):
+                .topRight
+            case (.bottom, _):
+                .bottom
+            case (.bottomLeft, _):
+                .bottomLeft
+            case (.bottomRight, _):
+                .bottomRight
+            }
         }
 
-        return GeometryReader { _ in
-            switch position {
-            case .center:
-                content
-                    .centered()
-            case .left:
+        switch position {
+        case .center:
+            content
+                .centered()
+        case .left:
+            HStack {
+                VStack {
+                    Spacer()
+                    content
+                    Spacer()
+                }
+                Spacer()
+            }
+        case .right:
+            HStack {
+                Spacer()
+                VStack {
+                    Spacer()
+                    content
+                    Spacer()
+                }
+            }
+        case .top:
+            VStack {
                 HStack {
-                    VStack {
-                        Spacer()
-                        content
-                        Spacer()
-                    }
+                    Spacer()
+                    content
                     Spacer()
                 }
-            case .right:
+                Spacer()
+            }
+        case .topLeft:
+            VStack {
+                HStack {
+                    content
+                    Spacer()
+                }
+                Spacer()
+            }
+        case .topRight:
+            VStack {
                 HStack {
                     Spacer()
-                    VStack {
-                        Spacer()
-                        content
-                        Spacer()
-                    }
+                    content
                 }
-            case .top:
-                VStack {
-                    HStack {
-                        Spacer()
-                        content
-                        Spacer()
-                    }
+                Spacer()
+            }
+        case .bottom:
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    content
                     Spacer()
                 }
-            case .topLeft:
-                VStack {
-                    HStack {
-                        content
-                        Spacer()
-                    }
+            }
+        case .bottomLeft:
+            VStack {
+                Spacer()
+                HStack {
+                    content
                     Spacer()
                 }
-            case .topRight:
-                VStack {
-                    HStack {
-                        Spacer()
-                        content
-                    }
+            }
+        case .bottomRight:
+            VStack {
+                Spacer()
+                HStack {
                     Spacer()
-                }
-            case .bottom:
-                VStack {
-                    Spacer()
-                    HStack {
-                        Spacer()
-                        content
-                        Spacer()
-                    }
-                }
-            case .bottomLeft:
-                VStack {
-                    Spacer()
-                    HStack {
-                        content
-                        Spacer()
-                    }
-                }
-            case .bottomRight:
-                VStack {
-                    Spacer()
-                    HStack {
-                        Spacer()
-                        content
-                    }
+                    content
                 }
             }
         }

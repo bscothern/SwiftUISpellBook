@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+#if swift(>=6.2) || GlassCompatibliity
 @available(iOS, obsoleted: 26, renamed: "GlassEffectContainer")
 @available(macOS, obsoleted: 26, renamed: "GlassEffectContainer")
 @available(tvOS, obsoleted: 26, renamed: "GlassEffectContainer")
@@ -17,7 +18,7 @@ public struct IfGlassGlassEffectContainer<Content: View>: View, Sendable {
     var spacing: CGFloat?
     
     @usableFromInline
-    var content: @Sendable () -> Content
+    var content: @MainActor () -> Content
 
     @inlinable
     public var body: some View {
@@ -31,9 +32,28 @@ public struct IfGlassGlassEffectContainer<Content: View>: View, Sendable {
     @inlinable
     public init(
         spacing: CGFloat? = nil,
-        @ViewBuilder content: @escaping @Sendable () -> Content
+        @ViewBuilder content: @escaping @MainActor () -> Content
     ) {
         self.spacing = spacing
         self.content = content
     }
 }
+#else
+public struct IfGlassGlassEffectContainer<Content: View>: View, Sendable {
+    @usableFromInline
+    var content: @Sendable () -> Content
+
+    @inlinable
+    public var body: some View {
+        content()
+    }
+
+    @inlinable
+    public init(
+        spacing: CGFloat? = nil,
+        @ViewBuilder content: @escaping @Sendable () -> Content
+    ) {
+        self.content = content
+    }
+}
+#endif

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-#if swift(>=6.2)
+#if swift(>=6.2) || GlassCompatibliity
 extension View {
     @inlinable
     @ViewBuilder

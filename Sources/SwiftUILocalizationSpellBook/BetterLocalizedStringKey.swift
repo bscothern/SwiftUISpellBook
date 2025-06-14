@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 
 public struct BetterLocalizedStringKey: Sendable {
-    public let localizedStringKey: LocalizedStringKey
+    nonisolated(unsafe) public let localizedStringKey: LocalizedStringKey
     public let tableName: String?
     public let bundle: Bundle?
     public let comment: StaticString?

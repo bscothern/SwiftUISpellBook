@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-#if swift(>=6.2)
+#if swift(>=6.2) || GlassCompatibliity
 public struct GlassEffectTransition: Sendable {
     @usableFromInline
     struct Old: Sendable {

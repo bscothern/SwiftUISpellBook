@@ -15,7 +15,7 @@ public protocol BundleFinder: AnyObject {
 }
 
 extension Bundle {
-    private static var foundBundles: [String: Bundle] = [:]
+    nonisolated(unsafe) private static var foundBundles: [String: Bundle] = [:]
 
     public static func bundleFinder(_ finder: BundleFinder.Type) -> Bundle {
         #if !DEBUG
