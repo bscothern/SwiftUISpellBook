@@ -41,7 +41,7 @@ public struct IfGlassGlassEffectContainer<Content: View>: View, Sendable {
 #else
 public struct IfGlassGlassEffectContainer<Content: View>: View, Sendable {
     @usableFromInline
-    var content: @Sendable () -> Content
+    var content: @MainActor () -> Content
 
     @inlinable
     public var body: some View {
@@ -51,7 +51,7 @@ public struct IfGlassGlassEffectContainer<Content: View>: View, Sendable {
     @inlinable
     public init(
         spacing: CGFloat? = nil,
-        @ViewBuilder content: @escaping @Sendable () -> Content
+        @ViewBuilder content: @escaping @MainActor () -> Content
     ) {
         self.content = content
     }
