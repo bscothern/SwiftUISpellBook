@@ -22,7 +22,7 @@ public struct SearchToolbarBehavior: Hashable, Sendable {
     let value: Value
 
     public static let automatic: Self = .init(value: .automatic)
-    
+
     @available(macOS, unavailable)
     public static let minimize: Self = .init(value: .minimize)
 

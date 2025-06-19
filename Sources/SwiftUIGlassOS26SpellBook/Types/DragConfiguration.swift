@@ -10,7 +10,7 @@ import SwiftUI
 public struct DragConfiguration {
     let allowMove: Bool
     let allowDelete: Bool
-    
+
     let _operationsWithinApp: OperationsWithinApp?
 
     @available(tvOS, unavailable)
@@ -30,7 +30,7 @@ public struct DragConfiguration {
     }
 
     let _operationsOutsideApp: OperationsOutsideApp?
-    
+
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
     init(allowMove: Bool) {
@@ -39,7 +39,7 @@ public struct DragConfiguration {
         self._operationsWithinApp = nil
         self._operationsOutsideApp = nil
     }
-    
+
     @available(iOS, unavailable)
     @available(macCatalyst, unavailable)
     @available(tvOS, unavailable)
@@ -52,7 +52,7 @@ public struct DragConfiguration {
         self._operationsWithinApp = nil
         self._operationsOutsideApp = nil
     }
-    
+
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
     @available(iOS 15, macOS 12, macCatalyst 15, visionOS 1, *)
@@ -65,7 +65,7 @@ public struct DragConfiguration {
         self._operationsWithinApp = operationsWithinApp
         self._operationsOutsideApp = operationsOutsideApp
     }
-    
+
     #if swift(>=6.2) || GlassCompatibliity
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
@@ -94,7 +94,7 @@ extension DragConfiguration {
         let allowCopy: Bool
         let allowMove: Bool
         let allowDelete: Bool
-        
+
         @available(macOS, unavailable)
         @available(tvOS, unavailable)
         @available(watchOS, unavailable)
@@ -104,7 +104,7 @@ extension DragConfiguration {
             self.allowMove = false
             self.allowDelete = false
         }
-        
+
         @available(iOS, unavailable)
         @available(macCatalyst, unavailable)
         @available(tvOS, unavailable)
@@ -116,7 +116,7 @@ extension DragConfiguration {
             self.allowMove = allowMove
             self.allowDelete = allowDelete
         }
-        
+
         @available(iOS, unavailable)
         @available(macCatalyst, unavailable)
         @available(tvOS, unavailable)
@@ -156,7 +156,7 @@ extension DragConfiguration {
         @available(iOS, macCatalyst, visionOS, *)
         public init(allowCopy: Bool = true) {
         }
-        
+
         @available(iOS, unavailable)
         @available(macCatalyst, unavailable)
         @available(tvOS, unavailable)
@@ -165,7 +165,7 @@ extension DragConfiguration {
         @available(macOS, *)
         public init(allowCopy: Bool = true, allowMove: Bool = false, allowDelete: Bool = false) {
         }
-        
+
         @available(iOS, unavailable)
         @available(macCatalyst, unavailable)
         @available(tvOS, unavailable)
@@ -185,7 +185,7 @@ extension DragConfiguration {
         let allowCopy: Bool
         let allowMove: Bool
         let allowDelete: Bool
-        
+
         @available(macOS, unavailable)
         @available(tvOS, unavailable)
         @available(watchOS, unavailable)
@@ -195,7 +195,7 @@ extension DragConfiguration {
             self.allowMove = allowMove
             self.allowDelete = false
         }
-        
+
         @available(iOS, unavailable)
         @available(macCatalyst, unavailable)
         @available(tvOS, unavailable)
@@ -207,7 +207,7 @@ extension DragConfiguration {
             self.allowMove = allowMove
             self.allowDelete = allowDelete
         }
-        
+
         @available(iOS, unavailable)
         @available(macCatalyst, unavailable)
         @available(tvOS, unavailable)
@@ -247,7 +247,7 @@ extension DragConfiguration {
         @available(iOS 26, macCatalyst 26, visionOS 26, *)
         public init(allowCopy: Bool = true) {
         }
-        
+
         @available(iOS, unavailable)
         @available(macCatalyst, unavailable)
         @available(tvOS, unavailable)
@@ -256,7 +256,7 @@ extension DragConfiguration {
         @available(macOS 26, *)
         public init(allowCopy: Bool = true, allowMove: Bool = false, allowDelete: Bool = false) {
         }
-        
+
         @available(iOS, unavailable)
         @available(macCatalyst, unavailable)
         @available(tvOS, unavailable)

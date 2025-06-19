@@ -13,13 +13,13 @@ public struct TextAlignmentStrategy: Hashable, Sendable {
         case layoutBased
         case writingDirectionBased
     }
-    
+
     let value: Value
-    
+
     public static let `default` = TextAlignmentStrategy(value: .default)
     public static let layoutBased = TextAlignmentStrategy(value: .layoutBased)
     public static let writingDirectionBased = TextAlignmentStrategy(value: .writingDirectionBased)
-    
+
     #if swift(>=6.2) || GlassCompatibliity
     @available(iOS 26, macOS 26, macCatalyst 26, tvOS 26, watchOS 26, visionOS 26, *)
     var swiftUIValue: Text.AlignmentStrategy {

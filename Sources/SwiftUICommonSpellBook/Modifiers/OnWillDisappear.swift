@@ -8,8 +8,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 #if canImport(UIKit)
 import UIKit
 
@@ -89,12 +87,12 @@ struct OnWillDisappearView: OnWillDisappearViewControllerRepresentable {
     init(action: @escaping @MainActor () -> Void) {
         self.action = action
     }
-    
+
     @usableFromInline
     func makeNSViewController(context: Context) -> ViewControllerType {
         ViewControllerType(action: action)
     }
-    
+
     @usableFromInline
     func updateNSViewController(_ nsViewController: ViewControllerType, context: Context) {
     }
