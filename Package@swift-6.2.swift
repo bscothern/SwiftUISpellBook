@@ -32,6 +32,10 @@ let package = Package(
             name: "SwiftUIMissingComponentsSpellBook",
             targets: ["SwiftUIMissingComponentsSpellBook"]
         ),
+        .library(
+            name: "SwiftUIGlassOS26SpellBook",
+            targets: ["SwiftUIGlassOS26SpellBook"]
+        )
     ],
     traits: [
         "GlassCompatibliity",
@@ -47,6 +51,7 @@ let package = Package(
                 .target(name: "SwiftUICommonSpellBook"),
                 .target(name: "SwiftUILocalizationSpellBook"),
                 .target(name: "SwiftUIMissingComponentsSpellBook"),
+                .target(name: "SwiftUIGlassOS26SpellBook"),
             ]
         ),
         .target(
@@ -63,7 +68,9 @@ let package = Package(
         ),
         .target(
             name: "SwiftUIMissingComponentsSpellBook",
-            dependencies: []
         ),
+        .target(
+            name: "SwiftUIGlassOS26SpellBook"
+        )
     ]
 )
