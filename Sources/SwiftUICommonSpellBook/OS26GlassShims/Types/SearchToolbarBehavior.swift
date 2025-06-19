@@ -22,6 +22,8 @@ public struct SearchToolbarBehavior: Hashable, Sendable {
     let value: Value
 
     public static let automatic: Self = .init(value: .automatic)
+    
+    @available(macOS, unavailable)
     public static let minimize: Self = .init(value: .minimize)
 
     #if swift(>=6.2) || GlassCompatibliity
@@ -32,7 +34,11 @@ public struct SearchToolbarBehavior: Hashable, Sendable {
         case .automatic:
             .automatic
         case .minimize:
+            #if os(macOS)
+            fatalError()
+            #else
             .minimize
+            #endif
         }
     }
     #endif

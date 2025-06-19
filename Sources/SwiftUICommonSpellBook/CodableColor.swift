@@ -55,9 +55,13 @@ public struct CodableColor: Codable, Sendable, Hashable {
         var g: CGFloat = 0.0
         var b: CGFloat = 0.0
         var a: CGFloat = 0.0
+        #if os(macOS)
+        NativeColor(value).getRed(&r, green: &g, blue: &b, alpha: &a)
+        #else
         guard NativeColor(value).getRed(&r, green: &g, blue: &b, alpha: &a) else {
             throw Error.conversionFailure
         }
+        #endif
         try container.encode(r, forKey: .r)
         try container.encode(g, forKey: .g)
         try container.encode(b, forKey: .b)

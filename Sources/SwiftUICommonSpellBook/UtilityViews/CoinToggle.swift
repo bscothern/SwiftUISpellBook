@@ -93,7 +93,7 @@ public struct CoinToggle<Side1Content: View, Side2Content: View>: View {
     }
 }
 
-@available(iOS 17.0, *)
+@available(iOS 17.0, macOS 14, *)
 #Preview {
     @Previewable
     @State

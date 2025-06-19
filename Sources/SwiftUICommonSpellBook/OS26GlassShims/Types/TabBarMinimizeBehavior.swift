@@ -38,11 +38,23 @@ public struct TabBarMinimizeBehavior: Hashable, Sendable {
         case .automatic:
             .automatic
         case .onScrollDown:
+            #if os(macOS)
+            fatalError()
+            #else
             .onScrollDown
+            #endif
         case .onScrollUp:
+            #if os(macOS)
+            fatalError()
+            #else
             .onScrollUp
+            #endif
         case .never:
+            #if os(macOS)
+            fatalError()
+            #else
             .never
+            #endif
         }
     }
     #endif

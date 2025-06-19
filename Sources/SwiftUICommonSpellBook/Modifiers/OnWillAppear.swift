@@ -7,7 +7,23 @@
 //
 
 import SwiftUI
+
+#if canImport(UIKit)
 import UIKit
+
+@usableFromInline
+typealias OnWillAppearViewControllerRepresentable = UIViewControllerRepresentable
+@usableFromInline
+typealias OnWillAppearViewController = UIViewController
+
+#elseif canImport(AppKit)
+import AppKit
+
+@usableFromInline
+typealias OnWillAppearViewControllerRepresentable = NSViewControllerRepresentable
+@usableFromInline
+typealias OnWillAppearViewController = NSViewController
+#endif
 
 extension View {
     @inlinable
@@ -34,9 +50,9 @@ struct OnWillAppearViewModifier: ViewModifier {
 }
 
 @usableFromInline
-struct OnWillAppearView: UIViewControllerRepresentable {
+struct OnWillAppearView: OnWillAppearViewControllerRepresentable {
     @usableFromInline
-    final class UIViewControllerType: UIViewController {
+    final class ViewControllerType: OnWillAppearViewController {
         @usableFromInline
         let action: @MainActor () -> Void
 
@@ -51,10 +67,17 @@ struct OnWillAppearView: UIViewControllerRepresentable {
             fatalError("init(coder:) has not been implemented")
         }
 
+        #if canImport(UIKit)
         override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(animated)
             action()
         }
+        #elseif canImport(AppKit)
+        override func viewWillAppear() {
+            super.viewWillAppear()
+            action()
+        }
+        #endif
     }
 
     @usableFromInline
@@ -64,13 +87,22 @@ struct OnWillAppearView: UIViewControllerRepresentable {
     init(action: @escaping @MainActor () -> Void) {
         self.action = action
     }
-
+    
     @usableFromInline
-    func makeUIViewController(context: Context) -> UIViewControllerType {
-        UIViewControllerType(action: action)
+    func makeNSViewController(context: Context) -> ViewControllerType {
+        ViewControllerType(action: action)
+    }
+    
+    @usableFromInline
+    func updateNSViewController(_ nsViewController: ViewControllerType, context: Context) {
     }
 
     @usableFromInline
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+    func makeUIViewController(context: Context) -> ViewControllerType {
+        ViewControllerType(action: action)
+    }
+
+    @usableFromInline
+    func updateUIViewController(_ uiViewController: ViewControllerType, context: Context) {
     }
 }

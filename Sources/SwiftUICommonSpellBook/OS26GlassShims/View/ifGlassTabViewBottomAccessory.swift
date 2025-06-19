@@ -21,7 +21,8 @@ extension View {
     ) -> some View
     where Content: View {
         if #available(iOS 26, macOS 26, macCatalyst 26, tvOS 26, watchOS 26, visionOS 26, *) {
-            self.tabViewBottomAccessory(content: content)
+            self
+//            self.tabViewBottomAccessory(content: content)
         } else {
             self
         }
