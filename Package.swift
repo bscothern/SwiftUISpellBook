@@ -33,7 +33,7 @@ let package = Package(
             targets: ["SwiftUIMissingComponentsSpellBook"]
         ),
     ],
-    dependencies: [    ],
+    dependencies: [],
     targets: [
         .target(
             name: "SwiftUISpellBook",
