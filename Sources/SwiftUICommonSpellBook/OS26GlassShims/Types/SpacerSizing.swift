@@ -20,7 +20,7 @@ public struct SpacerSizing: Sendable, SendableMetatype {
     }
 
     let value: Value
-    
+
     public static let fixed: SpacerSizing = .init(value: .fixed)
     public static let flexible: SpacerSizing = .init(value: .flexible)
 }

@@ -19,10 +19,10 @@ public struct Glass: Equatable, Sendable {
     struct Old: Equatable, Sendable {
         @usableFromInline
         var tint: Color?
-        
+
         @usableFromInline
         var interactive: Bool
-        
+
         @usableFromInline
         init(tint: Color? = nil, interactive: Bool = false) {
             self.tint = tint
@@ -32,7 +32,7 @@ public struct Glass: Equatable, Sendable {
 
     @usableFromInline
     var value: any Sendable
-    
+
     @usableFromInline
     init(value: any Sendable) {
         self.value = value
@@ -98,44 +98,44 @@ public struct Glass: Equatable, Sendable {
     struct Value: Equatable, Sendable {
         @usableFromInline
         var tint: Color?
-        
+
         @usableFromInline
         var interactive: Bool
-        
+
         @usableFromInline
         init(tint: Color? = nil, interactive: Bool = false) {
             self.tint = tint
             self.interactive = interactive
         }
     }
-    
+
     @usableFromInline
     var value: Value
-    
+
     @usableFromInline
     init(value: Value) {
         self.value = value
     }
-    
+
     @inlinable
     public static var regular: Glass {
         Self(value: Value())
     }
-    
+
     @inlinable
     public func tint(_ color: Color?) -> Glass {
         var copy = self
         copy.value.tint = color
         return copy
     }
-    
+
     @inlinable
     public func interactive(_ isEnabled: Bool = true) -> Glass {
         var copy = self
         copy.value.interactive = isEnabled
         return copy
     }
-    
+
     @inlinable
     public static func == (a: Glass, b: Glass) -> Bool {
         a.value == b.value

@@ -17,7 +17,7 @@ import SwiftUI
 public struct IfGlassGlassEffectContainer<Content: View>: View, Sendable {
     @usableFromInline
     var spacing: CGFloat?
-    
+
     @usableFromInline
     var content: @MainActor () -> Content
 

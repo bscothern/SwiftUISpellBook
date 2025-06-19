@@ -24,7 +24,7 @@ public struct TabBarMinimizeBehavior: Hashable, Sendable {
 
     @usableFromInline
     let value: Value
-    
+
     @usableFromInline
     init(value: Value) {
         self.value = value
@@ -60,7 +60,7 @@ public struct TabBarMinimizeBehavior: Hashable, Sendable {
     @available(watchOS, unavailable)
     @available(visionOS, unavailable)
     public static let onScrollUp = TabBarMinimizeBehavior(value: .onScrollUp)
-    
+
     @available(macOS, unavailable)
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)

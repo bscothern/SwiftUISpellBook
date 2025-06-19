@@ -18,12 +18,12 @@ public struct SearchToolbarBehavior: Hashable, Sendable, SendableMetatype {
         case automatic
         case minimize
     }
-    
+
     let value: Value
 
     public static let automatic: Self = .init(value: .automatic)
     public static let minimize: Self = .init(value: .minimize)
-    
+
     #if swift(>=6.2) || GlassCompatibliity
     @available(iOS 26, macOS 26, macCatalyst 26, tvOS 26, watchOS 26, visionOS 26, *)
     @usableFromInline

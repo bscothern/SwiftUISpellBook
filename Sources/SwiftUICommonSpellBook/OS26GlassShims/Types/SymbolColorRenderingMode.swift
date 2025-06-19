@@ -18,12 +18,12 @@ public struct SymbolColorRenderingMode: Hashable, Sendable, SendableMetatype {
         case flat
         case gradient
     }
-    
+
     let value: Value
-    
+
     public static let flat = Self(value: .flat)
     public static let gradient = Self(value: .gradient)
-    
+
     #if swift(>=6.2) || GlassCompatibliity
     @available(iOS 26, macOS 26, macCatalyst 26, tvOS 26, watchOS 26, visionOS 26, *)
     var swiftUIValue: SwiftUI.SymbolColorRenderingMode {

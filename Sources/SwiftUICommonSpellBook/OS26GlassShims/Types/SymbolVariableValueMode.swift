@@ -18,12 +18,12 @@ public struct SymbolVariableValueMode: Hashable, Sendable, SendableMetatype {
         case color
         case draw
     }
-    
+
     let value: Value
-    
+
     public static let color = Self(value: .color)
     public static let draw = Self(value: .draw)
-    
+
     #if swift(>=6.2) || GlassCompatibliity
     @available(iOS 26, macOS 26, macCatalyst 26, tvOS 26, watchOS 26, visionOS 26, *)
     var swiftUIValue: SwiftUI.SymbolVariableValueMode {

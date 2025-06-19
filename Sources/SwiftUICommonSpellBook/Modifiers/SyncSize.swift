@@ -98,7 +98,7 @@ final class SyncSizePublisher: Subject, Sendable {
 
     let id: UUID
     let base: PassthroughSubject<CGSize, Never> = .init()
-    
+
     let lock = NSRecursiveLock()
     nonisolated(unsafe) var _isRunning = true
     var isRunning: Bool {

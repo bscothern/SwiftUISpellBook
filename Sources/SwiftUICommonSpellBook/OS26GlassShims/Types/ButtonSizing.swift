@@ -19,11 +19,11 @@ public struct ButtonSizing: Hashable, Sendable, SendableMetatype {
         case fitted
         case flexible
     }
-    
+
     public static let automatic = ButtonSizing(value: .automatic)
     public static let fitted = ButtonSizing(value: .fitted)
     public static let flexible = ButtonSizing(value: .flexible)
-    
+
     let value: Value
 
 #if swift(>=6.2) || GlassCompatibliity

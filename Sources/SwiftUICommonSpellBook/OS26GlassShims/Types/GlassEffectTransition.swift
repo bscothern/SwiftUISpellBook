@@ -23,7 +23,7 @@ public struct GlassEffectTransition: Sendable {
 
     @usableFromInline
     var value: any Sendable
-    
+
     @usableFromInline
     init(value: any Sendable) {
         self.value = value
@@ -68,12 +68,12 @@ public struct GlassEffectTransition: Sendable {
     public static var identity: GlassEffectTransition {
         .init()
     }
-    
+
     @inlinable
     public static var matchedGeometry: GlassEffectTransition {
         .init()
     }
-    
+
     @inlinable
     public static func matchedGeometry(
         properties: MatchedGeometryProperties = .frame,
