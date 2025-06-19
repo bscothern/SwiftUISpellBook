@@ -7,32 +7,6 @@
 
 import SwiftUI
 
-@available(iOS, obsoleted: 26, renamed: "GlassButtonStyle")
-@available(macOS, obsoleted: 26, renamed: "GlassButtonStyle")
-@available(macCatalyst, obsoleted: 26, renamed: "GlassButtonStyle")
-@available(tvOS, obsoleted: 26, renamed: "GlassButtonStyle")
-@available(watchOS, obsoleted: 26, renamed: "GlassButtonStyle")
-@available(visionOS, obsoleted: 26, renamed: "GlassButtonStyle")
-public struct IfGlassGlassButtonStyle<ElseStyle: PrimitiveButtonStyle> {
-    @usableFromInline
-    let elseStyle: ElseStyle
-
-    @inlinable
-    public init(else elseStyle: ElseStyle) {
-        self.elseStyle = elseStyle
-    }
-}
-
-extension IfGlassGlassButtonStyle {
-    @inlinable
-    public static func glassOr(
-        _ elseStyle: ElseStyle
-    ) -> IfGlassGlassButtonStyle<ElseStyle>
-    where ElseStyle: PrimitiveButtonStyle {
-        IfGlassGlassButtonStyle(else: elseStyle)
-    }
-}
-
 #if swift(>=6.2) || GlassCompatibliity
 extension View {
     @available(iOS, obsoleted: 26)
@@ -62,3 +36,29 @@ extension View {
     }
 }
 #endif
+
+@available(iOS, obsoleted: 26, renamed: "GlassButtonStyle")
+@available(macOS, obsoleted: 26, renamed: "GlassButtonStyle")
+@available(macCatalyst, obsoleted: 26, renamed: "GlassButtonStyle")
+@available(tvOS, obsoleted: 26, renamed: "GlassButtonStyle")
+@available(watchOS, obsoleted: 26, renamed: "GlassButtonStyle")
+@available(visionOS, obsoleted: 26, renamed: "GlassButtonStyle")
+public struct IfGlassGlassButtonStyle<ElseStyle: PrimitiveButtonStyle> {
+    @usableFromInline
+    let elseStyle: ElseStyle
+
+    @inlinable
+    public init(else elseStyle: ElseStyle) {
+        self.elseStyle = elseStyle
+    }
+}
+
+extension IfGlassGlassButtonStyle {
+    @inlinable
+    public static func glassOr(
+        _ elseStyle: ElseStyle
+    ) -> IfGlassGlassButtonStyle<ElseStyle>
+    where ElseStyle: PrimitiveButtonStyle {
+        IfGlassGlassButtonStyle(else: elseStyle)
+    }
+}
