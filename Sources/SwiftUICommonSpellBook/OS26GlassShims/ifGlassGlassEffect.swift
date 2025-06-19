@@ -8,12 +8,12 @@
 import SwiftUI
 
 #if swift(>=6.2) || GlassCompatibliity
-@available(iOS, obsoleted: 26, renamed: "glassEffect(_:in:isEnabled:)")
-@available(macOS, obsoleted: 26, renamed: "glassEffect(_:in:isEnabled:)")
-@available(tvOS, obsoleted: 26, renamed: "glassEffect(_:in:isEnabled:)")
-@available(watchOS, obsoleted: 26, renamed: "glassEffect(_:in:isEnabled:)")
-@available(visionOS, obsoleted: 26, renamed: "glassEffect(_:in:isEnabled:)")
 extension View {
+    @available(iOS, obsoleted: 26, renamed: "glassEffect(_:in:isEnabled:)")
+    @available(macOS, obsoleted: 26, renamed: "glassEffect(_:in:isEnabled:)")
+    @available(tvOS, obsoleted: 26, renamed: "glassEffect(_:in:isEnabled:)")
+    @available(watchOS, obsoleted: 26, renamed: "glassEffect(_:in:isEnabled:)")
+    @available(visionOS, obsoleted: 26, renamed: "glassEffect(_:in:isEnabled:)")
     @inlinable
     @ViewBuilder
     public func ifGlassGlassEffect(

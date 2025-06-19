@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-@available(iOS, obsoleted: 26, renamed: "foregroundStyle(_:)")
-@available(macOS, obsoleted: 26, renamed: "foregroundStyle(_:)")
-@available(tvOS, obsoleted: 26, renamed: "foregroundStyle(_:)")
-@available(watchOS, obsoleted: 26, renamed: "foregroundStyle(_:)")
-@available(visionOS, obsoleted: 26, renamed: "foregroundStyle(_:)")
 extension View {
+    @available(iOS, obsoleted: 26, renamed: "foregroundStyle(_:)")
+    @available(macOS, obsoleted: 26, renamed: "foregroundStyle(_:)")
+    @available(tvOS, obsoleted: 26, renamed: "foregroundStyle(_:)")
+    @available(watchOS, obsoleted: 26, renamed: "foregroundStyle(_:)")
+    @available(visionOS, obsoleted: 26, renamed: "foregroundStyle(_:)")
     @inlinable
     @ViewBuilder
     public func ifGlassForegroundStyle<S>(_ style: S) -> some View where S: ShapeStyle {
@@ -23,6 +23,11 @@ extension View {
         }
     }
 
+    @available(iOS, obsoleted: 26, renamed: "foregroundStyle(_:)")
+    @available(macOS, obsoleted: 26, renamed: "foregroundStyle(_:)")
+    @available(tvOS, obsoleted: 26, renamed: "foregroundStyle(_:)")
+    @available(watchOS, obsoleted: 26, renamed: "foregroundStyle(_:)")
+    @available(visionOS, obsoleted: 26, renamed: "foregroundStyle(_:)")
     @inlinable
     @ViewBuilder
     public func ifGlassForegroundStyle<S1, S2>(_ style: S1, else elseStyle: S2) -> some View where S1: ShapeStyle, S2: ShapeStyle {
@@ -33,6 +38,11 @@ extension View {
         }
     }
 
+    @available(iOS, obsoleted: 26, renamed: "foregroundStyle(_:)")
+    @available(macOS, obsoleted: 26, renamed: "foregroundStyle(_:)")
+    @available(tvOS, obsoleted: 26, renamed: "foregroundStyle(_:)")
+    @available(watchOS, obsoleted: 26, renamed: "foregroundStyle(_:)")
+    @available(visionOS, obsoleted: 26, renamed: "foregroundStyle(_:)")
     @inlinable
     @ViewBuilder
     public func ifNoGlassForegroundStyle<S>(_ style: S) -> some View where S: ShapeStyle {

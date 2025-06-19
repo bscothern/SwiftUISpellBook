@@ -8,6 +8,11 @@
 import SwiftUI
 
 #if swift(>=6.2) || GlassCompatibliity
+@available(iOS, obsoleted: 26)
+@available(macOS, obsoleted: 26)
+@available(tvOS, obsoleted: 26)
+@available(watchOS, obsoleted: 26)
+@available(visionOS, obsoleted: 26)
 public struct GlassEffectTransition: Sendable {
     @usableFromInline
     struct Old: Sendable {

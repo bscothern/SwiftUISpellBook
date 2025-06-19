@@ -9,6 +9,11 @@ import SwiftUI
 
 #if swift(>=6.2) || GlassCompatibliity
 extension View {
+    @available(iOS, obsoleted: 26, renamed: "glassEffectTransition(_:isEnabled:)")
+    @available(macOS, obsoleted: 26, renamed: "glassEffectTransition(_:isEnabled:)")
+    @available(tvOS, obsoleted: 26, renamed: "glassEffectTransition(_:isEnabled:)")
+    @available(watchOS, obsoleted: 26, renamed: "glassEffectTransition(_:isEnabled:)")
+    @available(visionOS, obsoleted: 26, renamed: "glassEffectTransition(_:isEnabled:)")
     @inlinable
     @ViewBuilder
     public func ifGlassGlassEffectTransition(_ transition: GlassEffectTransition, isEnabled: Bool = true) -> some View {

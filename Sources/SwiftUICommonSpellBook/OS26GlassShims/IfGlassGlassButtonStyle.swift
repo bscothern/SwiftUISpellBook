@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+@available(iOS, obsoleted: 26, renamed: "GlassButtonStyle")
+@available(macOS, obsoleted: 26, renamed: "GlassButtonStyle")
+@available(tvOS, obsoleted: 26, renamed: "GlassButtonStyle")
+@available(watchOS, obsoleted: 26, renamed: "GlassButtonStyle")
+@available(visionOS, obsoleted: 26, renamed: "GlassButtonStyle")
 public struct IfGlassGlassButtonStyle<ElseStyle: PrimitiveButtonStyle> {
     @usableFromInline
     let elseStyle: ElseStyle
@@ -29,6 +34,11 @@ extension IfGlassGlassButtonStyle {
 
 #if swift(>=6.2) || GlassCompatibliity
 extension View {
+    @available(iOS, obsoleted: 26)
+    @available(macOS, obsoleted: 26)
+    @available(tvOS, obsoleted: 26)
+    @available(watchOS, obsoleted: 26)
+    @available(visionOS, obsoleted: 26)
     @inlinable
     @_disfavoredOverload
     @ViewBuilder

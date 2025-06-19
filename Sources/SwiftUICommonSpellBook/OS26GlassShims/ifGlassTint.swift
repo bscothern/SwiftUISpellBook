@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-@available(iOS, obsoleted: 26, renamed: "tint(_:)")
-@available(macOS, obsoleted: 26, renamed: "tint(_:)")
-@available(tvOS, obsoleted: 26, renamed: "tint(_:)")
-@available(watchOS, obsoleted: 26, renamed: "tint(_:)")
-@available(visionOS, obsoleted: 26, renamed: "tint(_:)")
 extension View {
+    @available(iOS, obsoleted: 26, renamed: "tint(_:)")
+    @available(macOS, obsoleted: 26, renamed: "tint(_:)")
+    @available(tvOS, obsoleted: 26, renamed: "tint(_:)")
+    @available(watchOS, obsoleted: 26, renamed: "tint(_:)")
+    @available(visionOS, obsoleted: 26, renamed: "tint(_:)")
     @inlinable
     @ViewBuilder
     public func ifGlassTint(_ tint: Color?) -> some View {
@@ -23,6 +23,11 @@ extension View {
         }
     }
 
+    @available(iOS, obsoleted: 26, renamed: "tint(_:)")
+    @available(macOS, obsoleted: 26, renamed: "tint(_:)")
+    @available(tvOS, obsoleted: 26, renamed: "tint(_:)")
+    @available(watchOS, obsoleted: 26, renamed: "tint(_:)")
+    @available(visionOS, obsoleted: 26, renamed: "tint(_:)")
     @inlinable
     @ViewBuilder
     public func ifGlassTintOtherwiseForegroundStyle(_ tint: Color?) -> some View {
@@ -35,6 +40,11 @@ extension View {
         }
     }
 
+    @available(iOS, obsoleted: 26, renamed: "tint(_:)")
+    @available(macOS, obsoleted: 26, renamed: "tint(_:)")
+    @available(tvOS, obsoleted: 26, renamed: "tint(_:)")
+    @available(watchOS, obsoleted: 26, renamed: "tint(_:)")
+    @available(visionOS, obsoleted: 26, renamed: "tint(_:)")
     @inlinable
     @ViewBuilder
     public func ifNoGlassTint(_ tint: Color?) -> some View {

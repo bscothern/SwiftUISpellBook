@@ -8,12 +8,13 @@
 import SwiftUI
 
 #if swift(>=6.2) || GlassCompatibliity
-@available(iOS, obsoleted: 26, renamed: "tabBarMinimizeBehavior(_:)")
-@available(macOS, obsoleted: 26, renamed: "tabBarMinimizeBehavior(_:)")
-@available(tvOS, obsoleted: 26, renamed: "tabBarMinimizeBehavior(_:)")
-@available(watchOS, obsoleted: 26, renamed: "tabBarMinimizeBehavior(_:)")
-@available(visionOS, obsoleted: 26, renamed: "tabBarMinimizeBehavior(_:)")
 extension View {
+    @available(iOS, obsoleted: 26, renamed: "tabBarMinimizeBehavior(_:)")
+    @available(macOS, obsoleted: 26, renamed: "tabBarMinimizeBehavior(_:)")
+    @available(tvOS, obsoleted: 26, renamed: "tabBarMinimizeBehavior(_:)")
+    @available(watchOS, obsoleted: 26, renamed: "tabBarMinimizeBehavior(_:)")
+    @available(visionOS, obsoleted: 26, renamed: "tabBarMinimizeBehavior(_:)")
+
     @inlinable
     @ViewBuilder
     public func ifGlassTabBarMinimizeBehavior(_ behavior: TabBarMinimizeBehavior) -> some View {

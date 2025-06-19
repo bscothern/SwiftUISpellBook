@@ -8,12 +8,12 @@
 import SwiftUI
 
 #if swift(>=6.2) || GlassCompatibliity
-@available(iOS, obsoleted: 26, renamed: "glassEffectUnion(id:namespace:)")
-@available(macOS, obsoleted: 26, renamed: "glassEffectUnion(id:namespace:)")
-@available(tvOS, obsoleted: 26, renamed: "glassEffectUnion(id:namespace:)")
-@available(watchOS, obsoleted: 26, renamed: "glassEffectUnion(id:namespace:)")
-@available(visionOS, obsoleted: 26, renamed: "glassEffectUnion(id:namespace:)")
 extension View {
+    @available(iOS, obsoleted: 26, renamed: "glassEffectUnion(id:namespace:)")
+    @available(macOS, obsoleted: 26, renamed: "glassEffectUnion(id:namespace:)")
+    @available(tvOS, obsoleted: 26, renamed: "glassEffectUnion(id:namespace:)")
+    @available(watchOS, obsoleted: 26, renamed: "glassEffectUnion(id:namespace:)")
+    @available(visionOS, obsoleted: 26, renamed: "glassEffectUnion(id:namespace:)")
     @MainActor
     @preconcurrency
     @inlinable

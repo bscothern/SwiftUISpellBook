@@ -8,12 +8,12 @@
 import SwiftUI
 
 #if swift(>=6.2) || GlassCompatibliity
-@available(iOS, obsoleted: 26, renamed: "foregroundStyle(_:)")
-@available(macOS, obsoleted: 26, renamed: "foregroundStyle(_:)")
-@available(tvOS, obsoleted: 26, renamed: "foregroundStyle(_:)")
-@available(watchOS, obsoleted: 26, renamed: "foregroundStyle(_:)")
-@available(visionOS, obsoleted: 26, renamed: "foregroundStyle(_:)")
 extension View {
+    @available(iOS, obsoleted: 26, renamed: "foregroundStyle(_:)")
+    @available(macOS, obsoleted: 26, renamed: "foregroundStyle(_:)")
+    @available(tvOS, obsoleted: 26, renamed: "foregroundStyle(_:)")
+    @available(watchOS, obsoleted: 26, renamed: "foregroundStyle(_:)")
+    @available(visionOS, obsoleted: 26, renamed: "foregroundStyle(_:)")
     @inlinable
     @ViewBuilder
     public func ifGlassBackgroundExtensionEffect() -> some View {

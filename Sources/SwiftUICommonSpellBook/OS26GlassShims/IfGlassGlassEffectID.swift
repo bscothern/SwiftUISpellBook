@@ -9,6 +9,11 @@ import SwiftUI
 
 #if swift(>=6.2) || GlassCompatibliity
 extension View {
+    @available(iOS, obsoleted: 26, renamed: "glassEffectID(_:in:)")
+    @available(macOS, obsoleted: 26, renamed: "glassEffectID(_:in:)")
+    @available(tvOS, obsoleted: 26, renamed: "glassEffectID(_:in:)")
+    @available(watchOS, obsoleted: 26, renamed: "glassEffectID(_:in:)")
+    @available(visionOS, obsoleted: 26, renamed: "glassEffectID(_:in:)")
     @inlinable
     @ViewBuilder
     public nonisolated func ifGlassGlassEffectID(
