@@ -9,6 +9,7 @@ import SwiftUI
 
 @available(iOS, obsoleted: 26)
 @available(macOS, obsoleted: 26)
+@available(macCatalyst, obsoleted: 26)
 @available(tvOS, obsoleted: 26)
 @available(watchOS, obsoleted: 26)
 @available(visionOS, obsoleted: 26)
@@ -24,7 +25,7 @@ public struct SymbolColorRenderingMode: Hashable, Sendable, SendableMetatype {
     public static let gradient = Self(value: .gradient)
     
     #if swift(>=6.2) || GlassCompatibliity
-    @available(iOS 26, macOS 26, tvOS 26, watchOS 26, visionOS 26, *)
+    @available(iOS 26, macOS 26, macCatalyst 26, tvOS 26, watchOS 26, visionOS 26, *)
     var swiftUIValue: SwiftUI.SymbolColorRenderingMode {
         switch value {
         case .flat:

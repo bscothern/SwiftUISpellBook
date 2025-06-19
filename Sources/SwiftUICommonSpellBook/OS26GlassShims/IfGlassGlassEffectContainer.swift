@@ -10,6 +10,7 @@ import SwiftUI
 #if swift(>=6.2) || GlassCompatibliity
 @available(iOS, obsoleted: 26, renamed: "GlassEffectContainer")
 @available(macOS, obsoleted: 26, renamed: "GlassEffectContainer")
+@available(macCatalyst, obsoleted: 26, renamed: "GlassEffectContainer")
 @available(tvOS, obsoleted: 26, renamed: "GlassEffectContainer")
 @available(watchOS, obsoleted: 26, renamed: "GlassEffectContainer")
 @available(visionOS, obsoleted: 26, renamed: "GlassEffectContainer")
@@ -22,7 +23,7 @@ public struct IfGlassGlassEffectContainer<Content: View>: View, Sendable {
 
     @inlinable
     public var body: some View {
-        if #available(iOS 26, macOS 26, tvOS 26, watchOS 26, visionOS 26, *) {
+        if #available(iOS 26, macOS 26, macCatalyst 26, tvOS 26, watchOS 26, visionOS 26, *) {
             GlassEffectContainer(spacing: spacing, content: content)
         } else {
             content()

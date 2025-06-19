@@ -9,6 +9,7 @@ import SwiftUI
 
 @available(iOS, obsoleted: 26, renamed: "GlassButtonStyle")
 @available(macOS, obsoleted: 26, renamed: "GlassButtonStyle")
+@available(macCatalyst, obsoleted: 26, renamed: "GlassButtonStyle")
 @available(tvOS, obsoleted: 26, renamed: "GlassButtonStyle")
 @available(watchOS, obsoleted: 26, renamed: "GlassButtonStyle")
 @available(visionOS, obsoleted: 26, renamed: "GlassButtonStyle")
@@ -36,6 +37,7 @@ extension IfGlassGlassButtonStyle {
 extension View {
     @available(iOS, obsoleted: 26)
     @available(macOS, obsoleted: 26)
+    @available(macCatalyst, obsoleted: 26)
     @available(tvOS, obsoleted: 26)
     @available(watchOS, obsoleted: 26)
     @available(visionOS, obsoleted: 26)
@@ -43,7 +45,7 @@ extension View {
     @_disfavoredOverload
     @ViewBuilder
     public func buttonStyle<ElseStyle>(_ buttonStyle: IfGlassGlassButtonStyle<ElseStyle>) -> some View where ElseStyle: PrimitiveButtonStyle {
-        if #available(iOS 26, macOS 26, tvOS 26, watchOS 26, visionOS 26, *) {
+        if #available(iOS 26, macOS 26, macCatalyst 26, tvOS 26, watchOS 26, visionOS 26, *) {
             self.buttonStyle(.glass)
         } else {
             self.buttonStyle(buttonStyle.elseStyle)

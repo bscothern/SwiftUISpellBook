@@ -11,6 +11,7 @@ import SwiftUI
 extension View {
     @available(iOS, obsoleted: 26, renamed: "glassEffect(_:in:isEnabled:)")
     @available(macOS, obsoleted: 26, renamed: "glassEffect(_:in:isEnabled:)")
+    @available(macCatalyst, obsoleted: 26, renamed: "glassEffect(_:in:isEnabled:)")
     @available(tvOS, obsoleted: 26, renamed: "glassEffect(_:in:isEnabled:)")
     @available(watchOS, obsoleted: 26, renamed: "glassEffect(_:in:isEnabled:)")
     @available(visionOS, obsoleted: 26, renamed: "glassEffect(_:in:isEnabled:)")
@@ -21,7 +22,7 @@ extension View {
         in shape: some Shape = .capsule,
         isEnabled: Bool = true
     ) -> some View {
-        if #available(iOS 26, macOS 26, tvOS 26, watchOS 26, visionOS 26, *),
+        if #available(iOS 26, macOS 26, macCatalyst 26, tvOS 26, watchOS 26, visionOS 26, *),
            let glass = glass.value as? SwiftUI.Glass {
             self.glassEffect(glass, in: shape, isEnabled: isEnabled)
         } else {

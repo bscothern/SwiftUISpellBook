@@ -11,6 +11,7 @@ import SwiftUI
 extension View {
     @available(iOS, obsoleted: 26, renamed: "glassEffectID(_:in:)")
     @available(macOS, obsoleted: 26, renamed: "glassEffectID(_:in:)")
+    @available(macCatalyst, obsoleted: 26, renamed: "glassEffectID(_:in:)")
     @available(tvOS, obsoleted: 26, renamed: "glassEffectID(_:in:)")
     @available(watchOS, obsoleted: 26, renamed: "glassEffectID(_:in:)")
     @available(visionOS, obsoleted: 26, renamed: "glassEffectID(_:in:)")
@@ -20,7 +21,7 @@ extension View {
         _ id: (some Hashable & Sendable)?,
         in namespace: Namespace.ID
     ) -> some View {
-        if #available(iOS 26, macOS 26, tvOS 26, watchOS 26, visionOS 26, *) {
+        if #available(iOS 26, macOS 26, macCatalyst 26, tvOS 26, watchOS 26, visionOS 26, *) {
             self.glassEffectID(id, in: namespace)
         } else {
             self

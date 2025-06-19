@@ -11,6 +11,7 @@ import SwiftUI
 extension View {
     @available(iOS, obsoleted: 26, renamed: "glassEffectUnion(id:namespace:)")
     @available(macOS, obsoleted: 26, renamed: "glassEffectUnion(id:namespace:)")
+    @available(macCatalyst, obsoleted: 26, renamed: "glassEffectUnion(id:namespace:)")
     @available(tvOS, obsoleted: 26, renamed: "glassEffectUnion(id:namespace:)")
     @available(watchOS, obsoleted: 26, renamed: "glassEffectUnion(id:namespace:)")
     @available(visionOS, obsoleted: 26, renamed: "glassEffectUnion(id:namespace:)")
@@ -22,7 +23,7 @@ extension View {
         id: (some Hashable & Sendable)?,
         namespace: Namespace.ID
     ) -> some View {
-        if #available(iOS 26, macOS 26, tvOS 26, watchOS 26, visionOS 26, *) {
+        if #available(iOS 26, macOS 26, macCatalyst 26, tvOS 26, watchOS 26, visionOS 26, *) {
             self.glassEffectUnion(id: id, namespace: namespace)
         } else {
             self

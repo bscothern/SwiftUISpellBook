@@ -11,6 +11,7 @@ import SwiftUI
 extension View {
     @available(iOS, obsoleted: 26, renamed: "tabViewBottomAccessory(content:)")
     @available(macOS, obsoleted: 26, renamed: "tabViewBottomAccessory(content:)")
+    @available(macCatalyst, obsoleted: 26, renamed: "tabViewBottomAccessory(content:)")
     @available(tvOS, obsoleted: 26, renamed: "tabViewBottomAccessory(content:)")
     @available(watchOS, obsoleted: 26, renamed: "tabViewBottomAccessory(content:)")
     @available(visionOS, obsoleted: 26, renamed: "tabViewBottomAccessory(content:)")
@@ -19,7 +20,7 @@ extension View {
         @ViewBuilder content: () -> Content
     ) -> some View
     where Content: View {
-        if #available(iOS 26, macOS 26, tvOS 26, watchOS 26, visionOS 26, *) {
+        if #available(iOS 26, macOS 26, macCatalyst 26, tvOS 26, watchOS 26, visionOS 26, *) {
             self.tabViewBottomAccessory(content: content)
         } else {
             self

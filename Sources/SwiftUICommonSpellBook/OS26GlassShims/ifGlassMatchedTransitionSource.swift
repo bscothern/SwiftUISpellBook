@@ -1,0 +1,26 @@
+//
+//  ifGlassMatchedTransitionSource.swift
+//  SwiftUISpellBook
+//
+//  Created by Braden Scothern on 6/19/25.
+//
+
+import SwiftUI
+
+#if swift(>=6.2) || GlassCompatibliity
+@available(macOS, unavailable)
+@available(watchOS, unavailable)
+@available(visionOS, unavailable)
+@available(iOS 16, tvOS 16, macCatalyst 16, *)
+extension ToolbarContent {
+    @ToolbarContentBuilder
+    public func ifGlassMatchedTransitionSource(id: some Hashable, in namespace: Namespace.ID) -> some ToolbarContent {
+        if #available(iOS 26, tvOS 26, macCatalyst 26, *) {
+            self
+        } else {
+            self
+        }
+    }
+}
+#else
+#endif

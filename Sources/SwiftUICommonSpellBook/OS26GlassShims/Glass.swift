@@ -10,6 +10,7 @@ import SwiftUI
 #if swift(>=6.2) || GlassCompatibliity
 @available(iOS, obsoleted: 26)
 @available(macOS, obsoleted: 26)
+@available(macCatalyst, obsoleted: 26)
 @available(tvOS, obsoleted: 26)
 @available(watchOS, obsoleted: 26)
 @available(visionOS, obsoleted: 26)
@@ -39,7 +40,7 @@ public struct Glass: Equatable, Sendable {
 
     @inlinable
     public static var regular: Glass {
-        if #available(iOS 26, macOS 26, tvOS 26, watchOS 26, visionOS 26, *) {
+        if #available(iOS 26, macOS 26, macCatalyst 26, tvOS 26, watchOS 26, visionOS 26, *) {
             Self(value: SwiftUI.Glass.regular)
         } else {
             Self(value: Old())
@@ -48,7 +49,7 @@ public struct Glass: Equatable, Sendable {
 
     @inlinable
     public func tint(_ color: Color?) -> Glass {
-        if #available(iOS 26, macOS 26, tvOS 26, watchOS 26, visionOS 26, *),
+        if #available(iOS 26, macOS 26, macCatalyst 26, tvOS 26, watchOS 26, visionOS 26, *),
            let glass = value as? SwiftUI.Glass {
             return Self(value: glass.tint(color))
         } else if var old = value as? Old {
@@ -62,7 +63,7 @@ public struct Glass: Equatable, Sendable {
 
     @inlinable
     public func interactive(_ isEnabled: Bool = true) -> Glass {
-        if #available(iOS 26, macOS 26, tvOS 26, watchOS 26, visionOS 26, *),
+        if #available(iOS 26, macOS 26, macCatalyst 26, tvOS 26, watchOS 26, visionOS 26, *),
            let glass = value as? SwiftUI.Glass {
             return Self(value: glass.interactive(isEnabled))
         } else if var old = value as? Old {
@@ -76,7 +77,7 @@ public struct Glass: Equatable, Sendable {
 
     @inlinable
     public static func == (a: Glass, b: Glass) -> Bool {
-        if #available(iOS 26, macOS 26, tvOS 26, watchOS 26, visionOS 26, *) {
+        if #available(iOS 26, macOS 26, macCatalyst 26, tvOS 26, watchOS 26, visionOS 26, *) {
            if let aGlass = a.value as? SwiftUI.Glass,
               let bGlass = b.value as? SwiftUI.Glass {
                return aGlass == bGlass
