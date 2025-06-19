@@ -13,7 +13,7 @@ import SwiftUI
 @available(iOS, obsoleted: 26)
 @available(macOS, obsoleted: 26)
 @available(macCatalyst, obsoleted: 26)
-public struct SpacerSizing: Sendable, SendableMetatype {
+public struct SpacerSizing: Sendable {
     enum Value: Sendable {
         case fixed
         case flexible

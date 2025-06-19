@@ -26,7 +26,6 @@ extension View {
 }
 #else
 extension View {
-    @ViewBuilder
     public func ifGlassSearchToolbarBehavior(_ behavior: SearchToolbarBehavior) -> some View {
         self
     }

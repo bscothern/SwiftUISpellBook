@@ -13,7 +13,7 @@ import SwiftUI
 @available(tvOS, obsoleted: 26)
 @available(watchOS, obsoleted: 26)
 @available(visionOS, obsoleted: 26)
-public struct SymbolColorRenderingMode: Hashable, Sendable, SendableMetatype {
+public struct SymbolColorRenderingMode: Hashable, Sendable {
     enum Value {
         case flat
         case gradient
