@@ -71,6 +71,6 @@ let package = Package(
         ),
         .target(
             name: "SwiftUIGlassOS26SpellBook"
-        )
+        ),
     ]
 )

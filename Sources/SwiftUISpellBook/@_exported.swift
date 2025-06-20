@@ -8,8 +8,6 @@
 
 @_exported import SwiftUIBundleFinder
 @_exported import SwiftUICommonSpellBook
+@_exported import SwiftUIGlassOS26SpellBook
 @_exported import SwiftUILocalizationSpellBook
 @_exported import SwiftUIMissingComponentsSpellBook
-#if canImport(SwiftUIGlassOS26SpellBook)
-@_exported import SwiftUIGlassOS26SpellBook
-#endif
