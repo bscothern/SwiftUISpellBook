@@ -17,10 +17,10 @@ extension View {
     @available(visionOS, obsoleted: 26, renamed: "glassEffectTransition(_:isEnabled:)")
     @inlinable
     @ViewBuilder
-    public func ifGlassGlassEffectTransition(_ transition: GlassEffectTransition, isEnabled: Bool = true) -> some View {
+    public func ifGlassGlassEffectTransition(_ transition: GlassEffectTransition) -> some View {
         if #available(iOS 26, macOS 26, macCatalyst 26, tvOS 26, watchOS 26, visionOS 26, *),
            let transition = transition.value as? SwiftUI.GlassEffectTransition {
-            self.glassEffectTransition(transition, isEnabled: isEnabled)
+            self.glassEffectTransition(transition)
         } else {
             self
         }

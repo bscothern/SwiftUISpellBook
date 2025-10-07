@@ -23,4 +23,14 @@ public struct SpacerSizing: Sendable {
 
     public static let fixed: SpacerSizing = .init(value: .fixed)
     public static let flexible: SpacerSizing = .init(value: .flexible)
+    
+    @available(iOS 26, macOS 26, macCatalyst 26, tvOS 26, watchOS 26, visionOS 26, *)
+    var iOS26Value: SwiftUI.SpacerSizing {
+        switch self.value {
+        case .fixed:
+            .fixed
+        case .flexible:
+            .flexible
+        }
+    }
 }

@@ -46,6 +46,24 @@ public struct Glass: Equatable, Sendable {
             Self(value: Old())
         }
     }
+    
+    @inlinable
+    public static var identity: Glass {
+        if #available(iOS 26, macOS 26, macCatalyst 26, tvOS 26, watchOS 26, visionOS 26, *) {
+            Self(value: SwiftUI.Glass.identity)
+        } else {
+            Self(value: Old())
+        }
+    }
+
+    @inlinable
+    public static var clear: Glass {
+        if #available(iOS 26, macOS 26, macCatalyst 26, tvOS 26, watchOS 26, visionOS 26, *) {
+            Self(value: SwiftUI.Glass.clear)
+        } else {
+            Self(value: Old())
+        }
+    }
 
     @inlinable
     public func tint(_ color: Color?) -> Glass {
@@ -95,7 +113,17 @@ public struct Glass: Equatable, Sendable {
 #else
 public struct Glass: Equatable, Sendable {
     @usableFromInline
+    enum Style: Equatable, Sendable {
+        case regular
+        case identity
+        case clear
+    }
+
+    @usableFromInline
     struct Value: Equatable, Sendable {
+        @usableFromInline
+        var style: Style
+        
         @usableFromInline
         var tint: Color?
 
@@ -103,7 +131,8 @@ public struct Glass: Equatable, Sendable {
         var interactive: Bool
 
         @usableFromInline
-        init(tint: Color? = nil, interactive: Bool = false) {
+        init(_ style: Style, tint: Color? = nil, interactive: Bool = false) {
+            self.style = style
             self.tint = tint
             self.interactive = interactive
         }
@@ -119,7 +148,17 @@ public struct Glass: Equatable, Sendable {
 
     @inlinable
     public static var regular: Glass {
-        Self(value: Value())
+        Self(value: Value(.regular))
+    }
+    
+    @inlinable
+    public static var identity: Glass {
+        Self(value: Value(.identity))
+    }
+    
+    @inlinable
+    public static var clear: Glass {
+        Self(value: Value(.clear))
     }
 
     @inlinable

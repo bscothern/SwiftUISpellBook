@@ -46,21 +46,6 @@ public struct GlassEffectTransition: Sendable {
             .init(value: Old())
         }
     }
-
-    @inlinable
-    public static func matchedGeometry(
-        properties: MatchedGeometryProperties = .frame,
-        anchor: UnitPoint = .center
-    ) -> GlassEffectTransition {
-        if #available(iOS 26, macOS 26, macCatalyst 26, tvOS 26, watchOS 26, visionOS 26, *) {
-            .init(value: SwiftUI.GlassEffectTransition.matchedGeometry(
-                properties: properties,
-                anchor: anchor)
-            )
-        } else {
-            .init(value: Old())
-        }
-    }
 }
 #else
 public struct GlassEffectTransition: Sendable {
@@ -71,14 +56,6 @@ public struct GlassEffectTransition: Sendable {
 
     @inlinable
     public static var matchedGeometry: GlassEffectTransition {
-        .init()
-    }
-
-    @inlinable
-    public static func matchedGeometry(
-        properties: MatchedGeometryProperties = .frame,
-        anchor: UnitPoint = .center
-    ) -> GlassEffectTransition {
         .init()
     }
 

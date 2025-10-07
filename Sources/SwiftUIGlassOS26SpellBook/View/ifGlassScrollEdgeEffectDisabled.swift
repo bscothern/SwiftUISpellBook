@@ -9,16 +9,16 @@ import SwiftUI
 
 #if swift(>=6.2) || GlassCompatibliity
 extension View {
-    @available(iOS, obsoleted: 26, renamed: "scrollEdgeEffectStyle(_:for:)")
-    @available(macOS, obsoleted: 26, renamed: "scrollEdgeEffectStyle(_:for:)")
-    @available(macCatalyst, obsoleted: 26, renamed: "scrollEdgeEffectStyle(_:for:)")
-    @available(tvOS, obsoleted: 26, renamed: "scrollEdgeEffectStyle(_:for:)")
-    @available(watchOS, obsoleted: 26, renamed: "scrollEdgeEffectStyle(_:for:)")
-    @available(visionOS, obsoleted: 26, renamed: "scrollEdgeEffectStyle(_:for:)")
+    @available(iOS, obsoleted: 26, renamed: "scrollEdgeEffectHidden(_:for:)")
+    @available(macOS, obsoleted: 26, renamed: "scrollEdgeEffectHidden(_:for:)")
+    @available(macCatalyst, obsoleted: 26, renamed: "scrollEdgeEffectHidden(_:for:)")
+    @available(tvOS, obsoleted: 26, renamed: "scrollEdgeEffectHidden(_:for:)")
+    @available(watchOS, obsoleted: 26, renamed: "scrollEdgeEffectHidden(_:for:)")
+    @available(visionOS, obsoleted: 26, renamed: "scrollEdgeEffectHidden(_:for:)")
     @ViewBuilder
-    public func ifGlassScrollEdgeEffectDisabled(_ disabled: Bool = true, for edges: Edge.Set = .all) -> some View {
+    public func ifGlassScrollEdgeEffectHidden(_ disabled: Bool = true, for edges: Edge.Set = .all) -> some View {
         if #available(iOS 26, macOS 26, macCatalyst 26, tvOS 26, watchOS 26, visionOS 26, *) {
-            self.scrollEdgeEffectDisabled(disabled, for: edges)
+            self.scrollEdgeEffectHidden(disabled, for: edges)
         } else {
             self
         }
@@ -26,7 +26,7 @@ extension View {
 }
 #else
 extension View {
-    public func ifGlassScrollEdgeEffectDisabled(_ disabled: Bool = true, for edges: Edge.Set = .all) -> some View {
+    public func ifGlassScrollEdgeEffectHidden(_ disabled: Bool = true, for edges: Edge.Set = .all) -> some View {
         self
     }
 }

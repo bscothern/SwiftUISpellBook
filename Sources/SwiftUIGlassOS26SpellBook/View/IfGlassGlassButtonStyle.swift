@@ -20,7 +20,12 @@ extension View {
     @ViewBuilder
     public func buttonStyle<ElseStyle>(_ buttonStyle: IfGlassGlassButtonStyle<ElseStyle>) -> some View where ElseStyle: PrimitiveButtonStyle {
         if #available(iOS 26, macOS 26, macCatalyst 26, tvOS 26, watchOS 26, visionOS 26, *) {
-            self.buttonStyle(.glass)
+            switch buttonStyle.mode {
+            case .regular:
+                self.buttonStyle(.glass)
+            case .prominent:
+                self.buttonStyle(.glassProminent)
+            }
         } else {
             self.buttonStyle(buttonStyle.elseStyle)
         }
@@ -45,10 +50,20 @@ extension View {
 @available(visionOS, obsoleted: 26, renamed: "GlassButtonStyle")
 public struct IfGlassGlassButtonStyle<ElseStyle: PrimitiveButtonStyle> {
     @usableFromInline
+    enum Mode {
+        case regular
+        case prominent
+    }
+    
+    @usableFromInline
+    let mode: Mode
+    
+    @usableFromInline
     let elseStyle: ElseStyle
 
-    @inlinable
-    public init(else elseStyle: ElseStyle) {
+    @usableFromInline
+    init(mode: Mode, else elseStyle: ElseStyle) {
+        self.mode = mode
         self.elseStyle = elseStyle
     }
 }
@@ -59,6 +74,14 @@ extension IfGlassGlassButtonStyle {
         _ elseStyle: ElseStyle
     ) -> IfGlassGlassButtonStyle<ElseStyle>
     where ElseStyle: PrimitiveButtonStyle {
-        IfGlassGlassButtonStyle(else: elseStyle)
+        IfGlassGlassButtonStyle(mode: .regular, else: elseStyle)
+    }
+
+    @inlinable
+    public static func glassProminentOr(
+        _ elseStyle: ElseStyle
+    ) -> IfGlassGlassButtonStyle<ElseStyle>
+    where ElseStyle: PrimitiveButtonStyle {
+        IfGlassGlassButtonStyle(mode: .prominent, else: elseStyle)
     }
 }

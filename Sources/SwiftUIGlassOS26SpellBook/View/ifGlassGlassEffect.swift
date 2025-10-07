@@ -19,12 +19,11 @@ extension View {
     @ViewBuilder
     public func ifGlassGlassEffect(
         _ glass: Glass = .regular,
-        in shape: some Shape = .capsule,
-        isEnabled: Bool = true
+        in shape: some Shape = .capsule
     ) -> some View {
         if #available(iOS 26, macOS 26, macCatalyst 26, tvOS 26, watchOS 26, visionOS 26, *),
            let glass = glass.value as? SwiftUI.Glass {
-            self.glassEffect(glass, in: shape, isEnabled: isEnabled)
+            self.glassEffect(glass, in: shape)
         } else {
             self
         }
