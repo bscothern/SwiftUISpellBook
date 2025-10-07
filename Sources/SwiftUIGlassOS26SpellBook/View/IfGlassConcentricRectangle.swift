@@ -14,7 +14,7 @@ import SwiftUI
 @available(tvOS, obsoleted: 26, renamed: "ConcentricRectangle()")
 @available(watchOS, obsoleted: 26, renamed: "ConcentricRectangle()")
 @available(visionOS, obsoleted: 26, renamed: "ConcentricRectangle()")
-public struct IfGlassConcentricRectangle: View {
+public struct IfGlassConcentricRectangle: Shape {
     let cornerRadius: CGFloat?
     let cornerSize: CGSize?
     let style: RoundedCornerStyle
@@ -36,20 +36,21 @@ public struct IfGlassConcentricRectangle: View {
         self.cornerSize = cornerSize
         self.style = style
     }
-    
-    public var body: some View {
+
+    public func path(in rect: CGRect) -> Path {
         if #available(iOS 26, macOS 26, macCatalyst 26, tvOS 26, watchOS 26, visionOS 26, *) {
-            ConcentricRectangle()
+            return ConcentricRectangle().path(in: rect)
         } else if let cornerRadius {
-            RoundedRectangle(cornerRadius: cornerRadius, style: style)
+            return RoundedRectangle(cornerRadius: cornerRadius, style: style).path(in: rect)
         } else if let cornerSize {
-            RoundedRectangle(cornerSize: cornerSize, style: style)
+            return RoundedRectangle(cornerSize: cornerSize, style: style).path(in: rect)
         }
+        return Path()
     }
 }
 
 #else
-public struct IfGlassConcentricRectangle: View {
+public struct IfGlassConcentricRectangle: Shape {
     let cornerRadius: CGFloat?
     let cornerSize: CGSize?
     let style: RoundedCornerStyle
@@ -72,12 +73,13 @@ public struct IfGlassConcentricRectangle: View {
         self.style = style
     }
 
-    public var body: some View {
+    public func path(in rect: CGRect) -> Path {
         if let cornerRadius {
-            RoundedRectangle(cornerRadius: cornerRadius, style: style)
+            return RoundedRectangle(cornerRadius: cornerRadius, style: style).path(in: rect)
         } else if let cornerSize {
-            RoundedRectangle(cornerSize: cornerSize, style: style)
+            return RoundedRectangle(cornerSize: cornerSize, style: style).path(in: rect)
         }
+        return Path()
     }
 }
 #endif
