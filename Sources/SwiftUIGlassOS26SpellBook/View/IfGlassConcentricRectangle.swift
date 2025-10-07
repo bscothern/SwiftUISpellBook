@@ -50,8 +50,34 @@ public struct IfGlassConcentricRectangle: View {
 
 #else
 public struct IfGlassConcentricRectangle: View {
+    let cornerRadius: CGFloat?
+    let cornerSize: CGSize?
+    let style: RoundedCornerStyle
+
+    public init(
+        orRoundedCornerRadius cornerRadius: CGFloat,
+        style: RoundedCornerStyle = .continuous
+    ) {
+        self.cornerRadius = cornerRadius
+        self.cornerSize = nil
+        self.style = style
+    }
+
+    public init(
+        orRoundedCornerSize cornerSize: CGSize,
+        style: RoundedCornerStyle = .continuous
+    ) {
+        self.cornerRadius = nil
+        self.cornerSize = cornerSize
+        self.style = style
+    }
+
     public var body: some View {
-        EmptyView()
+        if let cornerRadius {
+            RoundedRectangle(cornerRadius: cornerRadius, style: style)
+        } else if let cornerSize {
+            RoundedRectangle(cornerSize: cornerSize, style: style)
+        }
     }
 }
 #endif
